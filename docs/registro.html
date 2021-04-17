@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Registro </title>
+    <link rel=" icon " href="/images/Icono.ico">
+    <link rel="stylesheet" href="/css/style.css ">
+    <script src="/js/utils/include.js"></script>
+    <meta name=" viewport " content="width=device-width , initial-scale=1 ,shrink-to-fit=no">
+    <link rel=" stylesheet " href="/css/bootstrap.min.css">
+    <link rel=" stylesheet " href="/css/font-awesome.min.css">
+    <script src="/js/libs/jquery-3.4.1.min.js"> </script>
+    <script src="/js/libs/popper.min.js"> </script>
+    <script src="/js/libs/bootstrap.min.js"> </script>
+</head>
+
+<body>
+    <div id="page-header"> </div>
+    <div class="container text-center">
+        <br />
+        <div class="col-4 m-auto ">
+            <h2> Regístrese: </h2>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="nombre-input" name="nombre" placeholder="Nombre">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="apellidos-input" name="apellidos"
+                            placeholder="Apellidos">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email-input" name="email" placeholder="Email">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="contraseña-input" name="contraseña"
+                            placeholder="Contraseña">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="repetirContraseña-input"
+                            name="repetirContraseña" placeholder="Repite Contraseña">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="usuario-input" name="usuario" placeholder="Usuario">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="foto-input"> Foto de perfil: </label>
+                        <input type="file" class="form-control" id="foto-input" name="foto" placeholder="Foto">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class=" col-md text-center ">
+                <button type=" submit " class=" btn btn-primary "> Registrese </button>
+            </div>
+        </div>
+        <br/>
+        <div class="row ">
+            <div class=" col-md text-center ">
+                <a href="/docs/condiciones.html"><button type="button" class=" btn btn-light "> Condiciones y Contacto
+                    </button></a>
+            </div>
+        </div>
+    </div>
+    <script>include('header.html', '#page-header')</script>
+</body>
+
+</html>
