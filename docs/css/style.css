@@ -39,7 +39,7 @@ img.photo-user{
   height: 60px;
   border-radius: 50%;
 }
-img.img-top{
+img.img-ini{
   height:600px;
   width:auto;
 }
@@ -49,5 +49,9 @@ img.img-perf{
 }
 img.img-cat{
   height:150px;
+  width:auto;
+}
+img.img-top{
+  height:125px;
   width:auto;
 }
