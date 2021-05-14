@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS Photos;
+
+CREATE TABLE Photos (
+    photoId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(128) NOT NULL,
+    description VARCHAR(512),
+    url VARCHAR(512) NOT NULL,
+    category VARCHAR(128)
+);
+
+
+CREATE TABLE Users (
+    userId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    firstName VARCHAR(128) NOT NULL,
+    lastName VARCHAR(128) NOT NULL,
+    email VARCHAR(128) NOT NULL,
+    username VARCHAR(64) UNIQUE NOT NULL,
+    password VARCHAR(256) NOT NULL,
+    avatarUrl VARCHAR(512)
+);

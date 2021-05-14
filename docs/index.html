@@ -12,13 +12,16 @@
         <script src="/js/libs/jquery-3.4.1.min.js"> </script>
         <script src="/js/libs/popper.min.js"> </script>
         <script src="/js/libs/bootstrap.min.js"> </script>
-</head>
+        <script src="/js/libs/axios.min.js"></script>
+        <script src="/js/index.js" type="module"> </script>
 
+</head>
 
 <body>
         <div id="page-header"> </div>
         <div class=container>
                 <br />
+                <div id="errors"></div>
                 <div class="row ">
                         <div class=" col-md text-center ">
                                 <button type="button" class=" btn btn-secondary"> Seguidos </button>
@@ -27,8 +30,8 @@
                 </div>
                 <br />
                 <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 text-center">
-                                <div class="row">
+                        <div id="jsFoto" class="col-xs-12 col-sm-12 col-md-12 col-lg-9 text-center">
+                                <!--<div class="row">
                                         <div class="col-md-auto">
                                                 <a href="/docs/perfil.html"><img src="/docs/images/User.png"
                                                                 class="photo-user"></a>
@@ -74,7 +77,7 @@
                                                         </a>
                                                 </div>
                                         </div>
-                                </div>
+                                </div>-->
                         </div>
                         <div class="d-none d-lg-block col-lg">
                                 <div class="verticalLine" style="height: 700px; width: px;"></div>

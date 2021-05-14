@@ -6,65 +6,74 @@
     <link rel="icon" href="/images/Icono.ico">
     <link rel="stylesheet" href="/css/style.css ">
     <script src="/js/utils/include.js"></script>
-    <meta name=" viewport " content="width=device-width , initial-scale=1 ,shrink-to-fit=no">
-    <link rel=" stylesheet " href="/css/bootstrap.min.css">
-    <link rel=" stylesheet " href="/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width , initial-scale=1 ,shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     <script src="/js/libs/jquery-3.4.1.min.js"> </script>
     <script src="/js/libs/popper.min.js"> </script>
     <script src="/js/libs/bootstrap.min.js"> </script>
+    <script src="/js/modificarFoto.js" type="module"></script>
+    <script src="/js/libs/axios.min.js"></script>
+
 </head>
 
 <body>
     <div id="page-header"> </div>
     <div class="container text-center">
         <br/>
+        <div class="row" id="errors"></div>
         <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <a href="/docs/foto.html"><img src="/images/Cascada.jpg" class="card-img-top rounded" ></a>
+            <div id="jsModifyPhoto" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <!--<a href="/docs/foto.html"><img src="/images/Cascada.jpg" class="card-img-top rounded" ></a>-->
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-auto">
                 <div class="container text-center">
                     <div class="col-8 m-auto ">
-                        <h2> Modificar Foto: </h2>
-                        <div class="row">
-                            <div class="col-md">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="nuevoTitulo-input" name="nuevoTitulo"
-                                        placeholder="Nuevo Título">
+                        <form id="form-photo-upload">
+                            <h2> Modificar Foto: </h2>
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <label for="input-title">Título:</label>
+                                        <input type="text" class="form-control" id="input-title"
+                                            name="nuevoTituo" placeholder="Nuevo Título">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="nuevaDescripción-input"
-                                        name="nuevaDescripción" placeholder="Nueva Descripción">
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <label for="input-description">Descripción:</label>
+                                        <input type="text" class="form-control" id="input-description"
+                                            name="nuevaDescripción" placeholder="Nueva Descripción">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="nuevaCategoria-input"
-                                        name="nuevaCategoria" placeholder="Nueva Categoría">
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <label for="input-category">Categoría:</label>
+                                        <input type="text" class="form-control" id="input-category"
+                                            name="nuevaCategoria" placeholder="Nueva Categoría">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row ">
-                            <div class=" col-md text-center ">
-                                <button type="submit" class=" btn btn-secondary "> Modificar </button>
+                            <div class="row ">
+                                <div class=" col-md text-center ">
+                                    <button type="submit" class=" btn btn-secondary "> Modificar </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md text-center">
-                                <hr>
+                            <div class="row">
+                                <div class="col-md text-center">
+                                    <hr>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row ">
-                            <div class=" col-md text-center ">
-                                <button type="button" class=" btn btn-danger "> Eliminar Foto </button>
+                            <div class="row ">
+                                <div class=" col-md text-center ">
+                                    <button id="button-delete" class=" btn btn-danger "> Eliminar Foto </button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

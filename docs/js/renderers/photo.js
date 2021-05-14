@@ -1,29 +1,66 @@
-<!DOCTYPE html>
-<html>
+"use strict"
+import { parseHTML } from "/js/utils/parseHTML.js";
 
-<head>
-    <title> Foto </title>
-    <link rel=" icon " href="/images/Icono.ico">
-    <link rel="stylesheet" href="/css/style.css ">
-    <script src="/js/utils/include.js"></script>
-    <meta name=" viewport " content="width=device-width , initial-scale=1 ,shrink-to-fit=no">
-    <link rel=" stylesheet " href="/css/bootstrap.min.css">
-    <link rel=" stylesheet " href="/css/font-awesome.min.css">
-    <script src="/js/libs/jquery-3.4.1.min.js"> </script>
-    <script src="/js/libs/popper.min.js"> </script>
-    <script src="/js/libs/bootstrap.min.js"> </script>
-    <script src="/js/libs/axios.min.js"></script>
-    <script src="/js/foto.js" type="module"> </script>
-
-</head>
-
-<body>
-    <div id="page-header"> </div>
-    <div class="container">
-        <br />
-        <div id="errors"></div>
-        <div id="jsFotoDetails" class=" row text-center ">
-            <!--<div class=container>
+const photoRenderer = {
+        asCard: function (photo) {
+                let html = `
+        <div class="container"> 
+        <div class="row">
+                <div class="col-md-auto">
+                        <a href="/docs/perfil.html"><img src="/docs/images/User.png"
+                                        class="photo-user"></a>
+                </div>
+                <div class="col-md-auto">
+                        <h5 class="text-center"> Usuario </h5>
+                        <button type="button" class=" btn btn-secondary "> Siguiendo </button>
+                </div>
+        </div>
+        <h5 class="text-center"> ${photo.title} </h5>
+        <a href="/docs/foto.html?photoId=${photo.photoId}"><img src="${photo.url}" class="img-ini rounded"
+                        width=10></a>
+        <div>
+                <div class="row">
+                        <div class="col-md-auto text-left">
+                                <p class="text-left"> Tu valoración: </p>
+                                <form>
+                                        <h2>
+                                                <p class="clasificacion">
+                                                        <input id="radio1" type="radio"
+                                                                name="estrellas" value="5">
+                                                        <label for="radio1">★</label>
+                                                        <input id="radio2" type="radio"
+                                                                name="estrellas" value="4">
+                                                        <label for="radio2">★</label>
+                                                        <input id="radio3" type="radio"
+                                                                name="estrellas" value="3">
+                                                        <label for="radio3">★</label>
+                                                        <input id="radio4" type="radio"
+                                                                name="estrellas" value="2">
+                                                        <label for="radio4">★</label>
+                                                        <input id="radio5" type="radio"
+                                                                name="estrellas" value="1">
+                                                        <label for="radio5">★</label>
+                                                </p>
+                                        </h2>
+                                </form>
+                                <p class="text-left"> 5★ Estrellas de media </p>
+                        </div>
+                        <div class="col-md">
+                                <a href="/docs/categoria.html">
+                                        <p class="text-right"> ${photo.category} </p>
+                                </a>
+                        </div>
+                </div>
+        </div>
+        <hr>
+        </div>
+        `
+                let card = parseHTML(html);
+                return card;
+        },
+        asDetails: function (photo) {
+                let html = ` 
+                <div class=container>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 text-center">
                         <div class="row">
@@ -35,11 +72,11 @@
                                 <button type="button" class=" btn btn-light "> Seguido </button>
                             </div>
                             <div class="col text-right">
-                                <a href="/docs/modificarFoto.html"><img src="/docs/images/ajustes.png" class="botones"></a>
+                                <a href="/docs/modificarFoto.html?photoId=${photo.photoId}"><img src="/docs/images/ajustes.png" class="botones"></a>
                             </div>
                         </div>
-                        <h5 class="text-center"> Título de la foto </h5>
-                        <a href="/docs/foto.html"><img src="/images/Surf.jpg" class="card-img-top rounded"></a>
+                        <h5 class="text-center"> ${photo.title} </h5>
+                        <a href="/docs/foto.html?photoId=${photo.photoId}"><img src="${photo.url}" class="img-ini rounded"></a>
                         <div>
                             <div class="row">
                                 <div class="col-md-auto text-left">
@@ -67,7 +104,7 @@
                                 </div>
                                 <div class="col-md">
                                     <a href="/docs/categoria.html">
-                                        <p class="text-right"> Categoria </p>
+                                        <p class="text-right"> ${photo.category} </p>
                                     </a>
                                 </div>
                             </div>
@@ -161,9 +198,17 @@
                             placeholder="Añadir Comentario">
                     </div>
                 </div>
-            </div>-->
-        </div>
-        <script>include('header.html', '#page-header')</script>
-</body>
+            </div>
+                `;
+                let photoDetail = parseHTML(html);
+                return photoDetail;
+        },
+        asModify: function (photo) {
+            let html =`<a href="/docs/foto.html?photoId=${photo.photoId}"><img src="${photo.url}" class="card-img-top rounded" ></a>
+            `;
+        let photoModify = parseHTML(html);
+        return photoModify;
+        }
+};
 
-</html>
+export { photoRenderer };
