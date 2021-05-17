@@ -1,9 +1,9 @@
 "use strict";
 import { messageRenderer } from "/js/renderers/messages.js" ;
-import { userValidator } from "/js/validators/validators.js" ;
+import { userValidator } from "/js/validators/registroValidators.js" ;
 
 function main(){
-    let form=document.getElementById("form_reg");
+    let form=document.getElementById("formularioRegistro");
     form.onsubmit = formHandler;
 
 }
@@ -19,7 +19,7 @@ function formHandler(event){
         let errorsDiv=document.getElementById("errors");
         errorsDiv.innerHTML = "";
         for(let error of errors){
-           // errorsDiv.innerHTML += "<div>"+error+"</div>";
+           errorsDiv+= error;
             messageRenderer.showErrorMessage(error);
         }
     }
