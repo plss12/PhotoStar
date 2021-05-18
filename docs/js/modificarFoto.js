@@ -20,7 +20,7 @@ function main() {
     if (photoId !== null) {
         loadCurrentPhoto();
     }
-    let registerForm = document.getElementById("form-photo-upload");
+    let registerForm = document.getElementById("modificarFoto");
     registerForm.onsubmit = handleSubmitPhoto;
 
     let deleteBtn = document.querySelector("#button-delete");
