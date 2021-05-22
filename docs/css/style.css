@@ -36,19 +36,33 @@ img.botones{
   height:44px;
 }
 img.photo-user{
-  height: 60px;
-  border-radius: 50%;
+  height:70px;
+  width:70px;
+  border-radius:50%;
+}
+img.fotoUser{
+  height:auto;
+  width:70px;
+  border-radius:5%;
 }
 img.img-ini{
-  height:600px;
-  width:auto;
+  height:auto;
+  width:650px;
+}
+img.img-det{
+  height:auto;
+  width:700px;
+}
+img.img-mod{
+  height:auto;
+  width:600px;
 }
 img.img-perf{
   width: 100%;
   height: auto;
 }
 img.img-cat{
-  height:150px;
+  height:175px;
   width:auto;
 }
 img.img-top{

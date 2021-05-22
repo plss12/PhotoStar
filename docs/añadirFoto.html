@@ -6,21 +6,22 @@
     <link rel="icon" href="/images/Icono.ico">
     <link rel="stylesheet" href="/css/style.css ">
     <script src="/js/utils/include.js"></script>
-    <meta name=" viewport " content="width=device-width , initial-scale=1 ,shrink-to-fit=no">
-    <link rel=" stylesheet " href="/css/bootstrap.min.css">
-    <link rel=" stylesheet " href="/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width , initial-scale=1 ,shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     <script src="/js/libs/jquery-3.4.1.min.js"> </script>
     <script src="/js/libs/popper.min.js"> </script>
     <script src="/js/libs/bootstrap.min.js"> </script>
     <script src="/js/añadirFoto.js" type="module"></script>
     <script src="/js/libs/axios.min.js"></script>
+    <script src="/js/header.js" type="module"></script>
 </head>
 
 <body>
     <div id="page-header"> </div>
     <form id="añadirFoto">
         <div class="container text-center">
-            <br />
+            <br/>
             <div class="row" id="errors"></div>
             <div class="col-4 m-auto ">
                 <h2> Añadir Nueva Foto: </h2>
@@ -28,7 +29,7 @@
                     <div class="col-md">
                         <div class="form-group">
                             <label for="input-title">Título:</label>
-                            <input type="text" class="form-control" id="titulo-input" name="titulo"
+                            <input type="text" class="form-control" id="titulo-input" name="title"
                                 placeholder="Título">
                         </div>
                     </div>
@@ -37,7 +38,7 @@
                     <div class="col-md">
                         <div class="form-group">
                             <label for="input-description">Descripción:</label>
-                            <input type="text" class="form-control" id="descripción-input" name="descripción"
+                            <input type="text" class="form-control" id="descripción-input" name="description"
                                 placeholder="Breve descripción">
                         </div>
                     </div>
@@ -46,7 +47,7 @@
                     <div class="col-md">
                         <div class="form-group">
                             <label for="input-category">Categoría:</label>
-                            <input type="text" class="form-control" id="categoría-input" name="categoría"
+                            <input type="text" class="form-control" id="categoría-input" name="category"
                                 placeholder="Categoría">
                         </div>
                     </div>
@@ -55,7 +56,18 @@
                     <div class="col-md">
                         <div class="form-group">
                             <label for="input-foto"> Foto: </label>
-                            <input type="text" class="form-control" id="foto-input" name="foto" placeholder="Foto">
+                            <input type="text" class="form-control" id="foto-input" name="url" placeholder="Foto">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label for="input-visibility"> Visibilidad: </label>
+                            <select required class="form-control" id="visibility-input" name="visibility">
+                                <option value="Public">Public</option>
+                                <option value="Private">Private</option>
+                            </select>
                         </div>
                     </div>
                 </div>

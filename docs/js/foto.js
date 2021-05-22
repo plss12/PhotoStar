@@ -15,8 +15,6 @@ function main(){
             selector.appendChild(photoDetails);
         } )
         .catch( error => messageRenderer.showErrorMessage(error));
-
-   
 }
 
 

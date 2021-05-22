@@ -18,14 +18,34 @@ def get_by_id():
     pass
 
 ############################
+
+@endpoint(
+    route="/photos/categories/$category",
+    method="GET",
+    sql="SELECT * FROM Photos WHERE category=$category"
+)
+def get_by_category():
+    pass
+
+############################
+
+@endpoint(
+    route="/photos/users/$userId",
+    method="GET",
+    sql="SELECT * FROM Photos WHERE userId=$userId"
+)
+def get_by_user():
+    pass
+
+############################
   
 @endpoint(
     route="/photos",
     method="POST",
-    sql="INSERT INTO Photos (title, description, url, category) VALUES ($title, $description, $url, $category)",
+    sql="INSERT INTO Photos (userId, title, description, url, category, visibility) VALUES ($userId, $title, $description, $url, $category, $visibility)",
     description="Creates a new photo",
 )
-def create(title, description, url, category):
+def create(userId, title, description, url, category, visibility):
     pass
 
 ###############################################################################
@@ -33,10 +53,10 @@ def create(title, description, url, category):
 @endpoint(
     route="/photos/$photoId",
     method="PUT",
-    sql="UPDATE Photos SET title = $title, description = $description, url = $url, category = $category WHERE photoId = $photoId",
+    sql="UPDATE Photos SET userId=$userId, title = $title, description = $description, url = $url, category = $category, visibility = $visibility WHERE photoId = $photoId",
     description="Updates an existing photo",
 )
-def update(title, description, url, category):
+def update(userId, title, description, url, category, visibility):
     pass
 
 ###############################################################################

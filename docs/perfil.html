@@ -12,32 +12,37 @@
     <script src="/js/libs/jquery-3.4.1.min.js"> </script>
     <script src="/js/libs/popper.min.js"> </script>
     <script src="/js/libs/bootstrap.min.js"> </script>
+    <script src="/js/libs/axios.min.js"></script>
+    <script src="/js/header.js" type="module"></script>
+    <script src="/js/perfil.js" type="module"></script>
+
 </head>
 
 
 <body>
     <div id="page-header"> </div>
     <div class=container>
+        <div id="errors"></div>
         <br />
         <div class="row">
             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                 <div class="row">
                     <div class="col text-right">
-                        <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="photo-user"></a>
+                        <a href="/docs/perfil.html"><img src="" id="fotoUsuario" class="fotoUser"></a>
                     </div>
                     <div class="col m-auto">
-                        <h2> Usuario </h2>
+                        <h2 id="userUsuario">  </h2>
                     </div>
                 </div>
                 </br>
                 <div class="row text-center">
                     <div class="col-md">
-                        <h4> Nombre Apellidos </h4>
+                        <h4 id="nameUsuario">  </h4>
                     </div>
                 </div>
                 <div class="row text-center">
                     <div class="col-md">
-                        <h4> Email </h4>
+                        <h4 id="emailUsuario">  </h4>
                     </div>
                 </div>
             </div>
@@ -55,10 +60,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        <h4 class="text-center"> 1000 </h4>
+                        <h4 id="seguidoresUsuario" class="text-center">  </h4>
                     </div>
                     <div class="col-md">
-                        <h4 class="text-center"> 1000 </h4>
+                        <h4 id="seguidosUsuario"class="text-center">  </h4>
                     </div>
                 </div>
                 </br>
@@ -69,7 +74,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md text-center">
-                        <h4 class="text-center"> 5 ★</h4>
+                        <h4 id="valoracionUsuario" class="text-center"></h4>
                     </div>
                 </div>
 
@@ -78,11 +83,12 @@
         <hr>
         <div class="row ">
             <div class="col-md text-center">
-                <h2> 900 Fotos</h2>
+                <h2 id="numFotos"> </h2>
             </div>
         </div>
-        <div class="row">
-            <div class="col-4 text-center">
+        <div id="jsPerfil" class="row">
+
+            <!--<div class="col-4 text-center">
                 <div class="row">
                     <div class="col-md text-center">
                         <a href="/docs/foto.html"><img src="/docs/images/Pisos.jpg" class="img-perf rounded"></a>
@@ -117,7 +123,7 @@
                         Titulo
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 

@@ -6,24 +6,30 @@
     <link rel="icon" href="/images/Icono.ico">
     <link rel="stylesheet" href="/css/style.css ">
     <script src="/js/utils/include.js"></script>
-    <meta name=" viewport " content="width=device-width , initial-scale=1 ,shrink-to-fit=no">
-    <link rel=" stylesheet " href="/css/bootstrap.min.css">
-    <link rel=" stylesheet " href="/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width , initial-scale=1 ,shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     <script src="/js/libs/jquery-3.4.1.min.js"> </script>
     <script src="/js/libs/popper.min.js"> </script>
     <script src="/js/libs/bootstrap.min.js"> </script>
+    <script src="/js/libs/axios.min.js"></script>
+    <script src="/js/header.js" type="module"></script>
+    <script src="/js/añadirCategoria.js" type="module"></script>
+
 </head>
 
 <body>
     <div id="page-header"> </div>
     <div class="container text-center">
-        <br/>
+        <div class="row" id="errors"></div>
+        <br />
         <div class="col-4 m-auto ">
-                <h2 > Añadir Categoría: </h2>
+            <form id="añadirCategoria">
+                <h2> Añadir Categoría: </h2>
                 <div class="row">
                     <div class="col-md">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="nombre-input" name="nombre"
+                            <input type="text" class="form-control" id="nombre-input" name="name"
                                 placeholder="Nombre de la categoría">
                         </div>
                     </div>
@@ -31,8 +37,8 @@
                 <div class="row">
                     <div class="col-md">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="palabras-input" name="palabras"
-                                placeholder="Palabras clave">
+                            <input type="text" class="form-control" id="palabras-input" name="descripcion"
+                                placeholder="Descripción">
                         </div>
                     </div>
                 </div>
@@ -40,16 +46,17 @@
                     <div class="col-md">
                         <div class="form-group">
                             <label for="foto-input"> Foto de ejemplo: </label>
-                            <input type="file" class="form-control" id="foto-input" name="foto"
+                            <input type="text" class="form-control" id="foto-input" name="foto"
                                 placeholder="Foto de ejemplo">
                         </div>
                     </div>
                 </div>
-            <div class="row ">
-                <div class=" col-md text-center ">
-                    <button type=" submit " class=" btn btn-secondary "> Añadir </button>
+                <div class="row">
+                    <div class=" col-md text-center ">
+                        <button type="submit" class=" btn btn-secondary "> Añadir </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     </div>

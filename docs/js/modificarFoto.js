@@ -40,6 +40,7 @@ function loadCurrentPhoto() {
     let tituloInput = document.getElementById("input-title");
     let descripcionInput = document.getElementById("input-description");
     let categoriaInput = document.getElementById("input-category");
+    let visibilityInput = document.getElementById("input-visibility");
 
     photosAPI.getById(photoId)
         .then(photos => {
@@ -47,6 +48,8 @@ function loadCurrentPhoto() {
             tituloInput.value = currentPhoto.title;
             descripcionInput.value = currentPhoto.description;
             categoriaInput.value = currentPhoto.category;
+            visibilityInput.value = currentPhoto.visibility;
+
         })
         .catch(error => messageRenderer.showErrorMessage(error));
 }
@@ -58,6 +61,9 @@ function handleSubmitPhoto(event) {
     let formData = new FormData(form);
 
     formData.append("userId", currentPhoto.userId);
+    formData.append("url", currentPhoto.url);
+    formData.append("date", currentPhoto.date);
+
 
     photosAPI.update(photoId, formData)
         .then(data => window.location.href = "index.html")
