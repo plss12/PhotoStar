@@ -1,13 +1,17 @@
 "use strict"
 import { parseHTML } from "/js/utils/parseHTML.js" ;
 import { photoRenderer } from "/js/renderers/photo.js" ;
+import { sessionManager } from "/js/utils/session.js";
+import { usersAPI } from "/js/api/users.js";
+
 
 const galleryRenderer ={
     asCardGallery: function (photos){
         let galleryContainer = parseHTML ( '<div class= "photo-gallery" > </div>');
-        
         for(let photo of photos){
-            let card=photoRenderer.asCard(photo);
+            let user=usersAPI.getById(photo.userId);
+            console.log(user);
+            let card=photoRenderer.asCard(photo, user);
             galleryContainer.prepend(card);
         }
         return galleryContainer;
@@ -24,18 +28,19 @@ const galleryRenderer ={
     },
     asCategoryDetails: function (photos){
         let nombre=photos[0].category;
-        let html=parseHTML(nombre);
-        let galleryContainer3=parseHTML('<div class= "categoryDetails-gallery"><br/> <h1 class="text-center">'+ nombre+'</h1><br/> </div>');
-        
+        let galleryContainer=parseHTML('<div class= "categoryDetails-name"></div>');
+        let galleryContainer2=parseHTML('<div class= "categoryDetails-name"><div><br/> <h1 class="text-center">'+nombre+'</h1><br/><div></div>');
         for(let photo of photos){
-            let catDet=photoRenderer.asCategoryDetails(photo);
-            galleryContainer3.prepend(catDet);
+            let user=sessionManager.getLoggedUser();
+            let catDet=photoRenderer.asCategoryDetails(photo, user);
+            galleryContainer.prepend(catDet);
         }
-        return galleryContainer3;
+        galleryContainer.prepend(galleryContainer2);
+        return galleryContainer;
     },
     asPerfilDetails: function (photos){
-        let galleryContainer=parseHTML('<div class= "perfilDetails-gallery"></div>');
-        let row = parseHTML ( '<div class= "row"> </div >') ;
+        let galleryContainer=parseHTML('<div class= "col-12 perfilDetails-gallery"></div>');
+        let row = parseHTML ( '<div class="row"> </div >') ;
         galleryContainer.appendChild(row) ;
         
         let counter=0;

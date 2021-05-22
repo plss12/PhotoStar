@@ -2,19 +2,19 @@
 import { parseHTML } from "/js/utils/parseHTML.js";
 
 const photoRenderer = {
-    asCard: function (photo) {
+    asCard: function (photo, user) {
         let html = `
         <div class="container"> 
         <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-11 text-center">
                                 <div class="row">
                                         <div class="col-md-auto">
-                                                <a href="/docs/perfil.html"><img
-                                                                src="/docs/images/User.png"
+                                                <a href="/docs/perfil.html?userId=${user.userId}"><img
+                                                                src="${user.avatarUrl}"
                                                                 class="photo-user"></a>
                                         </div>
                                         <div class="col-md-auto">
-                                                <h5 class="text-center"> Usuario </h5>
+                                                <h5 class="text-center"> ${user.username} </h5>
                                                 <button type="button" class=" btn btn-secondary ">
                                                         Siguiendo
                                                 </button>
@@ -71,11 +71,12 @@ const photoRenderer = {
                                                         </a>
                                                 </div>
                                         </div>
+                                        <hr>
                                 </div>
                         </div>
 
                         <div class="d-none d-lg-block col-lg">
-                                <div class="verticalLine" style="height: 1200px; width: px;"></div>
+                                <div class="verticalLine" style="height: 1250px; width: px;"></div>
                         </div>
                 </div>
         </div>
@@ -83,17 +84,17 @@ const photoRenderer = {
         let card = parseHTML(html);
         return card;
     },
-    asDetails: function (photo) {
+    asDetails: function (photo, user) {
         let html = ` 
                 <div class=container>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 text-center">
                         <div class="row">
                             <div class="col-md-auto">
-                                <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="photo-user"></a>
+                                <a href="/docs/perfil.html?userId=${user.userId}"><img src="${user.avatarUrl}" class="photo-user"></a>
                             </div>
                             <div class="col-md-auto">
-                                <h5 class="text-center"> Usuario </h5>
+                                <h5 class="text-center"> ${user.username} </h5>
                                 <button type="button" class=" btn btn-light "> Seguido </button>
                             </div>
                             <div class="col text-right">
@@ -252,16 +253,16 @@ const photoRenderer = {
         let categoryCard = parseHTML(html);
         return categoryCard;
     },
-    asCategoryDetails: function (photo) {
+    asCategoryDetails: function (photo, user) {
         let html = `<div class="row justify-content-center">
             <div class="col-7 text-center">
                     <div class="row">
                             <div class="col-md-auto">
-                                    <a href="/docs/perfil.html"><img src="/docs/images/User.png"
+                                    <a href="/docs/perfil.html"><img src="${user.avatarUrl}"
                                                     class="photo-user"></a>
                             </div>
                             <div class="col-md-auto">
-                                    <h5 class="text-center"> Usuario </h5>
+                                    <h5 class="text-center"> ${user.username} </h5>
                                     <button type="button" class=" btn btn-secondary "> Siguiendo </button>
                             </div>
                     </div>
