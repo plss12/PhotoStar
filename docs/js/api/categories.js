@@ -21,6 +21,15 @@ const categoriesAPI = {
             }
         );
     },
+    getByName: function (name) {
+        return new Promise(
+            function (resolve, reject) {
+                axios.get(`${BASE_URL}/categories/name/${name}`, requestOptions)
+                    .then(response => resolve(response.data))
+                    .catch(error => reject(error.response.data.message));
+            }
+        );
+    },
     create: function (formData) {
         return new Promise(function (resolve, reject) {
             axios

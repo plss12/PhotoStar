@@ -21,10 +21,10 @@ const photosAPI = {
             }
         );
     },
-    getByCategory: function (category) {
+    getByCategory: function (categoryName) {
         return new Promise(
             function (resolve, reject) {
-                axios.get(`${BASE_URL}/photos/categories/${category}`, requestOptions)
+                axios.get(`${BASE_URL}/photos/categories/${categoryName}`, requestOptions)
                     .then(response => resolve(response.data))
                     .catch(error => reject(error.response.data.message));
             }

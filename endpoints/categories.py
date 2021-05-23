@@ -18,6 +18,16 @@ def get_by_id():
     pass
 
 ############################
+
+@endpoint(
+    route="/categories/name/$name",
+    method="GET",
+    sql="SELECT * FROM Categories WHERE name=$name"
+)
+def get_by_name():
+    pass
+
+############################
   
 @endpoint(
     route="/categories",

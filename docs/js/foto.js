@@ -1,6 +1,7 @@
 "use strict"
 import { photoRenderer } from "/js/renderers/photo.js" ;
 import {photosAPI} from "/js/api/photos.js";
+import {categoriesAPI} from "/js/api/categories.js";
 import {messageRenderer} from "/js/renderers/messages.js"
 import {sessionManager} from "/js/utils/session.js";
 
@@ -14,8 +15,13 @@ function main(){
 
     photosAPI.getById(photoId)
         .then(photos => {
-            let photoDetails= photoRenderer.asDetails(photos[0],user);
+            categoriesAPI.getByName(photos[0].category)
+                .then(categories => {                    
+                    let photoDetails= photoRenderer.asDetails(photos[0],user, categories[0]);
             selector.appendChild(photoDetails);
+                })
+                .catch(error => messageRenderer.showErrorMessage(error));
+            
         } )
         .catch( error => messageRenderer.showErrorMessage(error));
 }

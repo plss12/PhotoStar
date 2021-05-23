@@ -2,7 +2,7 @@
 import { parseHTML } from "/js/utils/parseHTML.js";
 
 const photoRenderer = {
-    asCard: function (photo, user) {
+    asCard: function (photo, user, category) {
         let html = `
         <div class="container"> 
         <div class="row">
@@ -66,7 +66,7 @@ const photoRenderer = {
                                                         <p class="text-left"> 5★ Estrellas de media </p>
                                                 </div>
                                                 <div class="col-md">
-                                                        <a href="/docs/categoria.html">
+                                                        <a href="/docs/categoria.html?categoryId=${category.categoryId}">
                                                                 <p class="text-right"> ${photo.category} </p>
                                                         </a>
                                                 </div>
@@ -84,7 +84,7 @@ const photoRenderer = {
         let card = parseHTML(html);
         return card;
     },
-    asDetails: function (photo, user) {
+    asDetails: function (photo, user, category) {
         let html = ` 
                 <div class=container>
                 <div class="row">
@@ -129,7 +129,7 @@ const photoRenderer = {
                                     <p> ${photo.description} foto</p>
                                 </div>
                                 <div class="col-md">
-                                    <a href="/docs/categoria.html">
+                                    <a href="/docs/categoria.html?categoryId=${category.categoryId}">
                                         <p class="text-right"> ${photo.category} </p>
                                     </a>
                                 </div>
