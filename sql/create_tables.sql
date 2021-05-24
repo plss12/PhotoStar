@@ -25,7 +25,7 @@ CREATE TABLE Photos (
     description VARCHAR(512),
     url VARCHAR(512) NOT NULL,
     date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    category VARCHAR(128),
+    category VARCHAR(128) NOT NULL,
     visibility VARCHAR(16) NOT NULL, 
     CONSTRAINT ValidVisibility CHECK (visibility in ('Public', 'Private'))
 );
@@ -44,3 +44,10 @@ CREATE TABLE Valorations (
     PRIMARY KEY (userId, photoId),
     CONSTRAINT ValidValue CHECK (value in (1,2,3,4,5))
 );
+
+CREATE TABLE Comments (
+    commentId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    text VARCHAR(512),
+    photoId INT NOT NULL,
+    userId INT NOT NULL
+    );

@@ -3,6 +3,7 @@ import { parseHTML } from "/js/utils/parseHTML.js" ;
 import { photoRenderer } from "/js/renderers/photo.js" ;
 import { usersAPI } from "/js/api/users.js";
 import { categoriesAPI } from "/js/api/categories.js";
+import { messageRenderer } from "/js/renderers/messages.js";
 
 
 
@@ -67,6 +68,20 @@ const galleryRenderer ={
                 galleryContainer.prepend(row) ;
 
             }
+        }
+        return galleryContainer;
+    },
+    asPhotoComments: function (comments){
+        let galleryContainer=parseHTML('<div class= "comment-gallery" > </div>'); 
+
+        for(let comment of comments){
+            usersAPI.getById(comment.userId)
+            .then(users => {
+                let commPho=photoRenderer.asComment(comment,users[0]);
+                galleryContainer.prepend(commPho);
+            })
+            .catch(error => messageRenderer.showErrorMessage(error));
+            
         }
         return galleryContainer;
     }

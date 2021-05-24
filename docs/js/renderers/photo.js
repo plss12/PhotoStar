@@ -74,10 +74,6 @@ const photoRenderer = {
                                         <hr>
                                 </div>
                         </div>
-
-                        <div class="d-none d-lg-block col-lg">
-                                <div class="verticalLine" style="height: 1250px; width: px;"></div>
-                        </div>
                 </div>
         </div>
         `
@@ -135,96 +131,20 @@ const photoRenderer = {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="d-none d-lg-block col-lg">
-                        <div class="verticalLine" style="height: 700px; width: px;"></div>
-                    </div>
-                    <div class="d-none d-lg-block col-lg-auto text-center">
-                        <div class="row">
-                            <div class="col-3">
-                                <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="rounded-circle"
-                                        width=50></a>
-                            </div>
-                            <div class="col-8 text-center">
-                                <p>Comentario 1</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-3">
-                                <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="rounded-circle"
-                                        width=50></a>
-                            </div>
-                            <div class="col-8 text-center">
-                                <p>Comentario 1</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-3">
-                                <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="rounded-circle"
-                                        width=50></a>
-                            </div>
-                            <div class="col-8 text-center">
-                                <p>Comentario 1</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-3">
-                                <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="rounded-circle"
-                                        width=50></a>
-                            </div>
-                            <div class="col-8 text-center">
-                                <p>Comentario 1</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-3">
-                                <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="rounded-circle"
-                                        width=50></a>
-                            </div>
-                            <div class="col-8 text-center">
-                                <p>Comentario 1</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-3">
-                                <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="rounded-circle"
-                                        width=50></a>
-                            </div>
-                            <div class="col-8 text-center">
-                                <p>Comentario 1</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-3">
-                                <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="rounded-circle"
-                                        width=50></a>
-                            </div>
-                            <div class="col-8 text-center">
-                                <p>Comentario 1</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-3">
-                                <a href="/docs/perfil.html"><img src="/docs/images/User.png" class="rounded-circle"
-                                        width=50></a>
-                            </div>
-                            <div class="col-8 text-center">
-                                <p>Comentario 1</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <input type="text" class="form-control" id="comentario-input" name="comentario"
-                            placeholder="Añadir Comentario">
-                    </div>
-                </div>
+                </div>    
+                <div class="d-none d-lg-block col-lg">
+            <div class="d-none d-lg-block col-lg-auto text-center">
+                <div id="jsComentarios"></div>
+                <form id="añadirComentario">
+                    <input type="text" class="form-control" id="comentario-input" name="text"
+                        placeholder="Añadir Comentario" style="height:100px;">
+                    </br>
+                    <button type="submit" class=" btn btn-secondary "> Añadir </button>
+                </form>
             </div>
+        </div>
+    </div>
+        
                 `;
         let photoDetail = parseHTML(html);
         return photoDetail;
@@ -258,7 +178,7 @@ const photoRenderer = {
             <div class="col-7 text-center">
                     <div class="row">
                             <div class="col-md-auto">
-                                    <a href="/docs/perfil.html"><img src="${user.avatarUrl}"
+                                    <a href="/docs/perfil.html?userId=${user.userId}"><img src="${user.avatarUrl}"
                                                     class="photo-user"></a>
                             </div>
                             <div class="col-md-auto">
@@ -322,6 +242,23 @@ const photoRenderer = {
     `;
         let categoria = parseHTML(html);
         return categoria;
+    },
+    asComment: function (comment, user) {
+        let html = `<div class=container>
+                        <div class="row">
+                            <div class="col-4">
+                                <a href="/docs/perfil.html?userId=${user.userId}"><img src="${user.avatarUrl}" class="photo-user"
+                                        width=50></a>
+                            </div>
+                            <div class="col text-center">
+                                <p>${comment.text}</p>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+        `;
+        let photoModify = parseHTML(html);
+        return photoModify;
     }
 };
 
