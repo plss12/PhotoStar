@@ -2,7 +2,7 @@
 <html>
 
 <head>
-        <title> Pagina Inicial </title>
+        <title> Pagina Seguidos </title>
         <link rel="icon" href="/images/Icono.ico">
         <link rel="stylesheet" href="/css/style.css">
         <script src="/js/utils/include.js"></script>
@@ -13,7 +13,7 @@
         <script src="/js/libs/popper.min.js"> </script>
         <script src="/js/libs/bootstrap.min.js"> </script>
         <script src="/js/libs/axios.min.js"></script>
-        <script src="/js/index.js" type="module"> </script>
+        <script src="/js/indexSeguidos.js" type="module"> </script>
         <script src="/js/header.js" type="module"></script>
 
 </head>
@@ -25,8 +25,8 @@
                 <div id="errors"></div>
                 <div class="row ">
                         <div class=" col-md text-center ">
-                                <button type="button" class=" btn btn-secondary "> Recientes </button>
-                                <a href="/docs/indexSeguidos.html"><button type="button" class=" btn btn-light"> Seguidos </button></a>
+                                <a href="/docs/index.html"><button type="button" class=" btn btn-light"> Recientes </button></a>
+                                <button type="button" class=" btn  btn-secondary"> Seguidos </button>
                         </div>
                 </div>
                 <br />
@@ -108,15 +108,10 @@
                         </div>
                         <div class="d-none d-lg-block col-lg-auto text-center">
                                 <div class="row">
-                                        <form class="example" style="margin:auto;max-width:300px">
-                                                <div class="row">
-                                                        <div class="col-md-10">
-                                                                <input type="text" placeholder="Buscar Categoria" id="buscador" class="form-control">
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                                <button type="submit" id="boton"><i class="fa fa-search"></i></button>
-                                                        </div>
-                                                </div>
+                                        <form class="example" action="/action_page.php"
+                                                style="margin:auto;max-width:300px">
+                                                <input type="text" placeholder="Search.." name="search2">
+                                                <button type="submit"><i class="fa fa-search"></i></button>
                                         </form>
                                 </div>
                                 <br />

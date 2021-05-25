@@ -1,6 +1,7 @@
 "use strict";
 import {photosAPI} from "/js/api/photos.js";
 import {usersAPI} from "/js/api/users.js";
+import {friendsAPI} from "/js/api/friends.js";
 import {sessionManager} from "/js/utils/session.js";
 import {galleryRenderer} from "/js/renderers/gallery.js" ;
 import { messageRenderer } from "/js/renderers/messages.js" ;
@@ -17,6 +18,7 @@ function main() {
         showAvatar(user);
         showNumFotos(user);
         showPhotos(user);
+        showFollowFollowers(user);
     }
     else{
         usersAPI.getById(userId).then(users => {
@@ -24,6 +26,7 @@ function main() {
             showAvatar(users[0]);
             showNumFotos(users[0]);
             showPhotos(users[0]);
+            showFollowFollowers(users[0]);
         } )
         .catch( error => messageRenderer.showErrorMessage(error));
 
@@ -39,7 +42,6 @@ function showPhotos(user){
                 let perfilDetails= galleryRenderer.asPerfilDetails(photos);
                 selector.appendChild(perfilDetails);
             } )
-            .catch( error => messageRenderer.showErrorMessage(error));
 }
 
 function showUser(user) {
@@ -66,9 +68,14 @@ function showUser(user) {
     text4 = follows;
     let followers=user.followers;
     text5 = followers;
-    let valoration=user.valoration+"  ★";
-    text6 = valoration;
-
+    if(user.valoration===null){
+        let valoration="0 ★";
+        text6 = valoration;
+    }
+    else{
+        let valoration=user.valoration+"  ★";
+        text6 = valoration;
+    }
     
     username.textContent = text1;
     nombre.textContent = text2;
@@ -90,10 +97,32 @@ function showAvatar(user){
 
 function showNumFotos(user){
     let selector = document.getElementById("numFotos");
-    let num;
-    let phNum=(photosAPI.getByUser(user).length+1)+' fotos';
-    num= phNum;
-    selector.textContent=num;
+    photosAPI.getByUser(user.userId)
+    .then(photos => {
+        let num= photos.length+" fotos";
+        selector.textContent=num;
+    } )
+    .catch(selector.textContent=0+" fotos");
+}
+
+function showFollowFollowers(user){
+    let selector1 = document.getElementById("seguidosUsuario");
+    let selector2 = document.getElementById("seguidoresUsuario");
+
+    friendsAPI.getFollows(user.userId)
+    .then(users => {
+        let foll= users.length;
+        selector1.textContent=foll;
+    } )
+    .catch(selector1.textContent=0);
+
+
+    friendsAPI.getFollowers(user.userId)
+    .then(users => {
+        let foll= users.length;
+        selector2.textContent=foll;
+    } )
+    .catch(selector2.textContent=0);
 }
 
 

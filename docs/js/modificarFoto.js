@@ -2,6 +2,8 @@
 import { photosAPI } from "/js/api/photos.js";
 import { photoRenderer } from "/js/renderers/photo.js";
 import { messageRenderer } from "/js/renderers/messages.js";
+import { sessionManager } from "/js/utils/session.js";
+
 
 let urlParams = new URLSearchParams(window.location.search);
 let photoId = urlParams.get("photoId");
@@ -14,21 +16,26 @@ function main() {
         .then(photos => {
             let photoModify = photoRenderer.asModify(photos[0]);
             selector.appendChild(photoModify);
+
+            if(sessionManager.getLoggedId()===photos[0].userId){
+                let registerForm = document.getElementById("modificarFoto");
+                registerForm.onsubmit = handleSubmitPhoto;
+            
+                let deleteBtn = document.querySelector("#button-delete");
+                deleteBtn.onclick = handleDelete;
+            }
+            else{
+                let registerForm = document.getElementById("modificarFoto");
+                registerForm.onsubmit = messageRenderer.showErrorMessage("Esta foto no es tuya");
+            }
         })
         .catch(error => messageRenderer.showErrorMessage(error));
-
-    if (photoId !== null) {
-        loadCurrentPhoto();
-    }
-    let registerForm = document.getElementById("modificarFoto");
-    registerForm.onsubmit = handleSubmitPhoto;
-
-    let deleteBtn = document.querySelector("#button-delete");
-    deleteBtn.onclick = handleDelete;
+    
+    loadCurrentPhoto();
 }
 
 function handleDelete(event) {
-    let answer = confirm("Ain't delete the photo?");
+    let answer = confirm("¿Estas seguro de que quieres eliminar la foto?");
     if (answer) {
         photosAPI.delete(photoId)
             .then(data => window.location.href = "index.html")

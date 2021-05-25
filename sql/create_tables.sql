@@ -2,6 +2,9 @@ DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Photos;
 DROP TABLE IF EXISTS Categories;
 DROP TABLE IF EXISTS Valorations;
+DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS Friends;
+
 
 
 CREATE TABLE Users (
@@ -38,10 +41,11 @@ CREATE TABLE Categories (
 );
 
 CREATE TABLE Valorations (
+    valorationId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     userId INT NOT NULL,
     photoId INT NOT NULL,
     value INT NOT NULL,
-    PRIMARY KEY (userId, photoId),
+    CONSTRAINT NoRepeat UNIQUE (userId,photoId),
     CONSTRAINT ValidValue CHECK (value in (1,2,3,4,5))
 );
 
@@ -50,4 +54,11 @@ CREATE TABLE Comments (
     text VARCHAR(512),
     photoId INT NOT NULL,
     userId INT NOT NULL
+    );
+
+CREATE TABLE Friends (
+    userId1 INT NOT NULL,
+    userId2 INT NOT NULL,
+    CONSTRAINT NoRepeat UNIQUE (userId1,userId2),
+    PRIMARY KEY (userId1, userId2)
     );

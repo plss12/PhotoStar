@@ -27,41 +27,42 @@ const photoRenderer = {
                                         <div class="row">
                                                 <div class="col-md-auto text-left">
                                                         <p class="text-left"> Tu valoración: </p>
-                                                        <form>
+                                                        <form id="añadirValoracion">
                                                                 <h2>
                                                                         <p class="clasificacion">
                                                                                 <input id="radio1"
                                                                                         type="radio"
-                                                                                        name="estrellas"
+                                                                                        name="value"
                                                                                         value="5">
                                                                                 <label
                                                                                         for="radio1">★</label>
                                                                                 <input id="radio2"
                                                                                         type="radio"
-                                                                                        name="estrellas"
+                                                                                        name="value"
                                                                                         value="4">
                                                                                 <label
                                                                                         for="radio2">★</label>
                                                                                 <input id="radio3"
                                                                                         type="radio"
-                                                                                        name="estrellas"
+                                                                                        name="value"
                                                                                         value="3">
                                                                                 <label
                                                                                         for="radio3">★</label>
                                                                                 <input id="radio4"
                                                                                         type="radio"
-                                                                                        name="estrellas"
+                                                                                        name="value"
                                                                                         value="2">
                                                                                 <label
                                                                                         for="radio4">★</label>
                                                                                 <input id="radio5"
                                                                                         type="radio"
-                                                                                        name="estrellas"
+                                                                                        name="value"
                                                                                         value="1">
                                                                                 <label
                                                                                         for="radio5">★</label>
                                                                         </p>
                                                                 </h2>
+                                                                <button type="submit" class=" btn btn-secondary btn-block" > Valorar Foto </button>
                                                         </form>
                                                         <p class="text-left"> 5★ Estrellas de media </p>
                                                 </div>
@@ -91,9 +92,11 @@ const photoRenderer = {
                             </div>
                             <div class="col-md-auto">
                                 <h5 class="text-center"> ${user.username} </h5>
-                                <button type="button" class=" btn btn-light "> Seguido </button>
+                                <form id="seguirUsuario">
+                                        <button type="submit" class=" btn btn-light "> Seguido </button>
+                                </form>
                             </div>
-                            <div class="col text-right">
+                            <div class="col text-right" id="modificarBoton">
                                 <a href="/docs/modificarFoto.html?photoId=${photo.photoId}"><img src="/docs/images/ajustes.png" class="botones"></a>
                             </div>
                         </div>
@@ -104,21 +107,22 @@ const photoRenderer = {
                                 <div class="col-md-auto text-left">
                                     <p class="text-left"> 5★ Estrellas de media </p>
                                     <p class="text-left"> Tu valoración: </p>
-                                    <form>
+                                    <form id="añadirValoracion">
                                         <h2>
                                             <p class="clasificacion">
-                                                <input id="radio1" type="radio" name="estrellas" value="5">
+                                                <input id="radio1" type="radio" name="value" value="5">
                                                 <label for="radio1">★</label>
-                                                <input id="radio2" type="radio" name="estrellas" value="4">
+                                                <input id="radio2" type="radio" name="value" value="4">
                                                 <label for="radio2">★</label>
-                                                <input id="radio3" type="radio" name="estrellas" value="3">
+                                                <input id="radio3" type="radio" name="value" value="3">
                                                 <label for="radio3">★</label>
-                                                <input id="radio4" type="radio" name="estrellas" value="2">
+                                                <input id="radio4" type="radio" name="value" value="2">
                                                 <label for="radio4">★</label>
-                                                <input id="radio5" type="radio" name="estrellas" value="1">
+                                                <input id="radio5" type="radio" name="value" value="1">
                                                 <label for="radio5">★</label>
                                             </p>
                                         </h2>
+                                        <button type="submit" class=" btn btn-secondary btn-block" > Valorar Foto </button>
                                     </form>
                                 </div>
                                 <div class="col-6 text-center">

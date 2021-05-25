@@ -22,6 +22,31 @@ const galleryRenderer ={
             })
             .catch(error => messageRenderer.showErrorMessage(error));
         }
+
+        return galleryContainer;
+    },
+
+    asCardGalleryFollows: function (photos, usersId){
+        let galleryContainer = parseHTML ( '<div class= "photo-gallery" > </div>');
+        const users=[];
+        for(let userId of usersId){
+            users.push(userId.userId2);
+        }
+        for(let photo of photos){
+            if(users.includes(photo.userId)){
+                usersAPI.getById(photo.userId)
+                .then(users => {
+                    categoriesAPI.getByName(photo.category)
+                    .then(categories => {                    
+                        let card=photoRenderer.asCard(photo, users[0], categories[0]);
+                        galleryContainer.prepend(card);
+                    })
+                    .catch(error => messageRenderer.showErrorMessage(error));
+                })
+                .catch(error => messageRenderer.showErrorMessage(error));
+            }
+        }
+
         return galleryContainer;
     },
 
@@ -37,18 +62,14 @@ const galleryRenderer ={
     asCategoryDetails: function (photos){
         let nombre=photos[0].category;
         let galleryContainer=parseHTML('<div class= "categoryDetails-gallery"></div>');
-        let galleryContainer1=parseHTML('<div class= "categoryDetails-photos"></div>');
-        let galleryContainer2=parseHTML('<div class= "categoryDetails-name"><div><br/> <h1 class="text-center">'+nombre+'</h1><br/><div></div>');
         for(let photo of photos){
             usersAPI.getById(photo.userId)
             .then(users => {
                 let catDet=photoRenderer.asCategoryDetails(photo, users[0]);
-                galleryContainer1.prepend(catDet);
+                galleryContainer.prepend(catDet);
             })
             .catch(error => messageRenderer.showErrorMessage(error));
         }
-        galleryContainer.append(galleryContainer2);
-        galleryContainer.append(galleryContainer1);
         return galleryContainer;
     },
     asPerfilDetails: function (photos){

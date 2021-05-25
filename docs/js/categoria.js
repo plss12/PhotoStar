@@ -9,8 +9,9 @@ function main(){
     let categoryId = urlParams.get("categoryId");
     categoriesAPI.getById(categoryId)
         .then(categories => {
+            let nombre = document.getElementById("nombreCat");
             let name= categories[0].name;
-            console.log(name);
+            nombre.textContent=name;
             photosCategory(name);
         } )
         .catch( error => messageRenderer.showErrorMessage(error));
@@ -24,7 +25,7 @@ function photosCategory(name){
             let categoryDetails= galleryRenderer.asCategoryDetails(photos);
             selector.appendChild(categoryDetails);
         } )
-        .catch( error => messageRenderer.showErrorMessage(error));
+        .catch( error => messageRenderer.showErrorMessage("Esta categoria no tiene fotos"));
 }
 
 
