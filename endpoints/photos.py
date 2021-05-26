@@ -10,6 +10,15 @@ def get_all():
 ############################
 
 @endpoint(
+    route="/photos/visibility/$visibility",
+    method="GET",
+    sql="SELECT * FROM Photos WHERE visibility=$visibility"
+)
+def get_all_visibility():
+    pass
+############################
+
+@endpoint(
     route="/photos/$photoId",
     method="GET",
     sql="SELECT * FROM Photos WHERE photoId=$photoId"

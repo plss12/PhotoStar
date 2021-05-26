@@ -17,14 +17,14 @@ function main() {
         showUser(user);
         showAvatar(user);
         showNumFotos(user);
-        showPhotos(user);
+        showPhotosAll(user);
         showFollowFollowers(user);
     }
     else{
         usersAPI.getById(userId).then(users => {
             showUser(users[0]);
             showAvatar(users[0]);
-            showNumFotos(users[0]);
+            showNumFotosPerf(users[0]);
             showPhotos(users[0]);
             showFollowFollowers(users[0]);
         } )
@@ -33,6 +33,15 @@ function main() {
     }
 
 
+}
+
+function showPhotosAll(user){
+    let selector=document.querySelector("#jsPerfil");
+    photosAPI.getByUser(user.userId)
+            .then(photos => {
+                let perfilDetails= galleryRenderer.asPerfilDetails(photos, user.userId);
+                selector.appendChild(perfilDetails);
+            } )
 }
 
 function showPhotos(user){
@@ -100,6 +109,23 @@ function showNumFotos(user){
     photosAPI.getByUser(user.userId)
     .then(photos => {
         let num= photos.length+" fotos";
+        selector.textContent=num;
+    } )
+    .catch(selector.textContent=0+" fotos");
+}
+
+function showNumFotosPerf(user){
+    let selector = document.getElementById("numFotos");
+    let i=0;
+    photosAPI.getByUser(user.userId)
+    .then(photos => {
+        for (let x=0; x<photos.length; x++){
+            console.log(photos[x].visibility);
+            if(photos[x].visibility==="Public"){
+                i=i+1;
+            }
+        }
+        let num= i+" fotos";
         selector.textContent=num;
     } )
     .catch(selector.textContent=0+" fotos");

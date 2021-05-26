@@ -7,7 +7,7 @@ import { valorationsAPI } from "/js/api/valorations.js";
 
 function main() {
     let content = document.querySelector("#jsFoto");
-    photosAPI.getAll()
+    photosAPI.getByVisibility("Public")
         .then(photos => {
             let gallery = galleryRenderer.asCardGallery(photos);
             content.appendChild(gallery);

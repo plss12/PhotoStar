@@ -10,7 +10,7 @@ import { sessionManager } from "/js/utils/session.js";
 
 function main(){
     let content=document.querySelector("#jsFoto");
-    photosAPI.getAll()
+    photosAPI.getByVisibility("Public")
         .then(photos => {
             friendsAPI.getFollows(sessionManager.getLoggedId())
             .then(users=> {

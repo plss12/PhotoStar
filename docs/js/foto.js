@@ -20,36 +20,62 @@ function main() {
 
     photosAPI.getById(photoId)
         .then(photos => {
-            //userId2.appendChild(photos[0].userId);
-            categoriesAPI.getByName(photos[0].category)
-                .then(categories => {
-                    usersAPI.getById(photos[0].userId)
-                        .then(users => {
-                            let photoDetails = photoRenderer.asDetails(photos[0], users[0], categories[0]);
-                            selector.appendChild(photoDetails);
+            if (photos[0].visibility === "Public" || photos[0].userId === sessionManager.getLoggedId()) {
+                //userId2.appendChild(photos[0].userId);
+                usersAPI.getById(photos[0].userId)
+                    .then(users => {
+                        categoriesAPI.getByName(photos[0].category)
+                            .then(categories => {
 
-                            hideOptions(photos[0]);
+                                let photoDetails = photoRenderer.asDetails(photos[0], users[0], categories[0]);
+                                selector.appendChild(photoDetails);
 
-                            let comentarios = document.querySelector("#jsComentarios");
-                            commentsAPI.getByPhoto(photoId)
-                                .then(comments => {
-                                    let commentsPhotos = galleryRenderer.asPhotoComments(comments);
-                                    comentarios.appendChild(commentsPhotos);
-                                })
-                            let commentForm = document.getElementById("añadirComentario");
-                            commentForm.onsubmit = handleSubmitComment;
+                                hideOptions(photos[0]);
+                                hideFollow(photos[0]);
 
-                            let valorationForm = document.getElementById("añadirValoracion");
-                            valorationForm.onsubmit = handleSubmitValoration;
+                                let comentarios = document.querySelector("#jsComentarios");
+                                commentsAPI.getByPhoto(photoId)
+                                    .then(comments => {
+                                        let commentsPhotos = galleryRenderer.asPhotoComments(comments);
+                                        comentarios.appendChild(commentsPhotos);
+                                    })
+                                let commentForm = document.getElementById("añadirComentario");
+                                commentForm.onsubmit = handleSubmitComment;
 
-                            let friendForm = document.getElementById("seguirUsuario");
-                            friendForm.onsubmit = handleSubmitFriend;
+                                let valorationForm = document.getElementById("añadirValoracion");
+                                valorationForm.onsubmit = handleSubmitValoration;
 
-                        })
-                        .catch(error => messageRenderer.showErrorMessage(error));
-                })
-                .catch(error => messageRenderer.showErrorMessage(error));
+                                let friendForm = document.getElementById("seguirUsuario");
+                                friendForm.onsubmit = handleSubmitFriend;
 
+                            })
+                            .catch(error => {
+                                let photoDetails = photoRenderer.asDetails(photos[0], users[0], null);
+                                selector.appendChild(photoDetails);
+                                hideOptions(photos[0]);
+                                hideFollow(photos[0]);
+
+                                let comentarios = document.querySelector("#jsComentarios");
+                                commentsAPI.getByPhoto(photoId)
+                                    .then(comments => {
+                                        let commentsPhotos = galleryRenderer.asPhotoComments(comments);
+                                        comentarios.appendChild(commentsPhotos);
+                                    })
+                                let commentForm = document.getElementById("añadirComentario");
+                                commentForm.onsubmit = handleSubmitComment;
+
+                                let valorationForm = document.getElementById("añadirValoracion");
+                                valorationForm.onsubmit = handleSubmitValoration;
+
+                                let friendForm = document.getElementById("seguirUsuario");
+                                friendForm.onsubmit = handleSubmitFriend;
+                            });
+                    })
+                    .catch(error => messageRenderer.showErrorMessage(error));
+            }
+            else {
+                messageRenderer.showErrorMessage("Esta foto es privada")
+            }
         })
         .catch(error => messageRenderer.showErrorMessage(error));
 }
@@ -104,11 +130,17 @@ function handleSubmitFriend(event) {
 
 function hideOptions(photo) {
     let modificar = document.getElementById("modificarBoton");
-    console.log(modificar);
     if (sessionManager.getLoggedId() === photo.userId) {
     } else {
         modificar.style.display = "none";
+    }
+}
 
+function hideFollow(photo) {
+    let modificar = document.getElementById("seguirUsuario");
+    if (sessionManager.getLoggedId() !== photo.userId) {
+    } else {
+        modificar.style.display = "none";
     }
 }
 

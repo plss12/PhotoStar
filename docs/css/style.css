@@ -69,3 +69,18 @@ img.img-top{
   height:125px;
   width:125px;
 }
+img.arrow{
+  height:20px;
+  width: 20px;
+}
+.ir-arriba {
+	display:none;
+	padding:20px;
+	background:rgba(214, 89, 39, 0.856);
+	font-size:20px;
+	color:#fff;
+	cursor:pointer;
+	position: fixed;
+	bottom:20px;
+	right:20px;
+}

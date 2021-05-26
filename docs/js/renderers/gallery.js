@@ -4,6 +4,7 @@ import { photoRenderer } from "/js/renderers/photo.js" ;
 import { usersAPI } from "/js/api/users.js";
 import { categoriesAPI } from "/js/api/categories.js";
 import { messageRenderer } from "/js/renderers/messages.js";
+import {sessionManager} from "/js/utils/session.js";
 
 
 
@@ -14,11 +15,14 @@ const galleryRenderer ={
             usersAPI.getById(photo.userId)
             .then(users => {
                 categoriesAPI.getByName(photo.category)
-                .then(categories => {                    
+                .then(categories => {
                     let card=photoRenderer.asCard(photo, users[0], categories[0]);
                     galleryContainer.prepend(card);
                 })
-                .catch(error => messageRenderer.showErrorMessage(error));
+                .catch(error => {
+                    let card=photoRenderer.asCard(photo, users[0], null);
+                    galleryContainer.prepend(card);
+                });
             })
             .catch(error => messageRenderer.showErrorMessage(error));
         }
@@ -41,7 +45,10 @@ const galleryRenderer ={
                         let card=photoRenderer.asCard(photo, users[0], categories[0]);
                         galleryContainer.prepend(card);
                     })
-                    .catch(error => messageRenderer.showErrorMessage(error));
+                    .catch(error => {
+                        let card=photoRenderer.asCard(photo, users[0], null);
+                        galleryContainer.prepend(card)
+                    });
                 })
                 .catch(error => messageRenderer.showErrorMessage(error));
             }
@@ -63,16 +70,18 @@ const galleryRenderer ={
         let nombre=photos[0].category;
         let galleryContainer=parseHTML('<div class= "categoryDetails-gallery"></div>');
         for(let photo of photos){
-            usersAPI.getById(photo.userId)
-            .then(users => {
-                let catDet=photoRenderer.asCategoryDetails(photo, users[0]);
-                galleryContainer.prepend(catDet);
-            })
-            .catch(error => messageRenderer.showErrorMessage(error));
+            if(photo.visibility==="Public"){
+                usersAPI.getById(photo.userId)
+                .then(users => {
+                    let catDet=photoRenderer.asCategoryDetails(photo, users[0]);
+                    galleryContainer.prepend(catDet);
+                })
+                .catch(error => messageRenderer.showErrorMessage(error));
+            }
         }
         return galleryContainer;
     },
-    asPerfilDetails: function (photos){
+    asPerfilDetails: function (photos, userId){
         let galleryContainer=parseHTML('<div class= "col-12 perfilDetails-gallery"></div>');
         let row = parseHTML ( '<div class="row"> </div >') ;
         galleryContainer.appendChild(row) ;
@@ -80,14 +89,16 @@ const galleryRenderer ={
         let counter=0;
 
         for(let photo of photos){
-            let perCat=photoRenderer.asPerfilDetails(photo);
-            row.prepend(perCat);
-            counter+=1;
-
-            if( counter % 3 === 0){
-                row = parseHTML ( '<div class= "row"> </div >') ;
-                galleryContainer.prepend(row) ;
-
+            if(photo.visibility==="Public" || userId===sessionManager.getLoggedId()){
+                let perCat=photoRenderer.asPerfilDetails(photo);
+                row.prepend(perCat);
+                counter+=1;
+    
+                if( counter % 3 === 0){
+                    row = parseHTML ( '<div class= "row"> </div >') ;
+                    galleryContainer.prepend(row) ;
+    
+                }
             }
         }
         return galleryContainer;

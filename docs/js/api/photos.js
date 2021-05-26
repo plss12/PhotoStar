@@ -12,6 +12,15 @@ const photosAPI = {
             }
         );
     },
+    getByVisibility: function (visibility) {
+        return new Promise(
+            function (resolve, reject) {
+                axios.get(`${BASE_URL}/photos/visibility/${visibility}`, requestOptions)
+                    .then(response => resolve(response.data))
+                    .catch(error => reject(error.response.data.message));
+            }
+        );
+    },
     getById: function (photoId) {
         return new Promise(
             function (resolve, reject) {
