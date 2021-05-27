@@ -35,6 +35,7 @@ function main() {
                                 hideOptions(photos[0]);
                                 hideFollow(photos[0]);
                                 loadValoration();
+                                loadMediaValoration();
 
                                 let comentarios = document.querySelector("#jsComentarios");
                                 commentsAPI.getByPhoto(photoId)
@@ -61,6 +62,7 @@ function main() {
                                 hideOptions(photos[0]);
                                 hideFollow(photos[0]);
                                 loadValoration();
+                                loadMediaValoration();
 
                                 let comentarios = document.querySelector("#jsComentarios");
                                 commentsAPI.getByPhoto(photoId)
@@ -121,7 +123,22 @@ function loadValoration(){
                 console.log(valoracion);
                  valoracion.value=valorations[0].value;
         })
-        .catch(error => messageRenderer.showErrorMessage(error));
+}
+
+function loadMediaValoration(){
+    let valoracion = document.getElementById("valoracionMedia");
+
+    valorationsAPI.getByPhoto(photoId)
+            .then(valorations => {
+                let val=0;
+                for(let i=0; i<valorations.length; i++){
+                    val+=valorations[i].value;
+                }
+                valoracion.textContent=("La valoración media es de "+(val/valorations.length)+"★");
+        })
+        .catch(error =>{
+            valoracion.textContent=("Aun no tiene valoraciones");
+        })
 }
 
 function handleSubmitComment(event) {

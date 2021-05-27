@@ -15,11 +15,8 @@ CREATE TABLE Users (
     telephone VARCHAR(32) NOT NULL,
     username VARCHAR(64) UNIQUE NOT NULL,
     password VARCHAR(256) NOT NULL,
-    avatarUrl VARCHAR(512),
-    follows INT,
-    followers INT,
-    valoration INT
-);
+    avatarUrl VARCHAR(512)
+    );
 
 CREATE TABLE Photos (
     photoId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

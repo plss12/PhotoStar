@@ -88,7 +88,7 @@ const photoRenderer = {
                         <div>
                             <div class="row">
                                 <div class="col-md-auto text-left">
-                                    <p class="text-left"> 5★ Estrellas de media </p>
+                                    <p class="text-left" id="valoracionMedia">  </p>
                                     <p class="text-left"> Tu valoración: </p>
                                     <form id="añadirValoracion">
                                         <h2>

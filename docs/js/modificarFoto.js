@@ -4,8 +4,8 @@ import { categoriesAPI } from "/js/api/categories.js";
 import { photoRenderer } from "/js/renderers/photo.js";
 import { messageRenderer } from "/js/renderers/messages.js";
 import { sessionManager } from "/js/utils/session.js";
+import { commentsAPI } from "/js/api/comments.js";
 import { insultosValidator } from "/js/validators/insultosValidators.js";
-
 
 let urlParams = new URLSearchParams(window.location.search);
 let photoId = urlParams.get("photoId");
@@ -25,8 +25,16 @@ function main() {
                 let registerForm = document.getElementById("modificarFoto");
                 registerForm.onsubmit = handleSubmitPhoto;
 
-                let deleteBtn = document.querySelector("#button-delete");
-                deleteBtn.onclick = handleDelete;
+                commentsAPI.getByPhoto(photoId)
+                    .then(comments => {    
+                        let deleteBtn = document.querySelector("#button-delete");
+                        deleteBtn.onclick=messageRenderer.showErrorMessage("Esta foto no se puede eliminar ya que tiene comentarios");                    
+                    })
+                    .catch(error => {
+                        let deleteBtn = document.querySelector("#button-delete");
+                        deleteBtn.onclick = handleDelete;
+                    });
+          
             }
             else {
                 let registerForm = document.getElementById("modificarFoto");
@@ -43,6 +51,7 @@ function handleDelete(event) {
             .then(data => window.location.href = "index.html")
             .catch(error => messageRenderer.showErrorMessage(error));
     }
+
 }
 
 function loadCurrentPhoto() {
@@ -82,7 +91,7 @@ function handleSubmitPhoto(event) {
 
             let cateForm = document.getElementById("input-category").value;
 
-            if (categorias.includes("" + cateForm + "")) {
+            if (categorias.includes("" + cateForm + "") || cateForm==="") {
                 let errors = insultosValidator.validatePhotoDescription(formData);
 
                 if (errors.length > 0) {
@@ -93,9 +102,22 @@ function handleSubmitPhoto(event) {
                     }
                 }
                 else {
-                    photosAPI.update(photoId, formData)
-                    .then(data => window.location.href = "index.html")
-                    .catch(error => messageRenderer.showErrorMessage(error));
+                    commentsAPI.getByPhoto(photoId)
+                    .then(comments => {   
+                        if(formData.get("visibility")==="Public"){
+                            photosAPI.update(photoId, formData)
+                                .then(data => window.location.href = "index.html")
+                                .catch(error => messageRenderer.showErrorMessage(error));
+                        }
+                        else{
+                            messageRenderer.showErrorMessage("No se puede poner privada una foto con comentarios");
+                        }
+                    })
+                    .catch(error => {
+                        photosAPI.update(photoId, formData)
+                            .then(data => window.location.href = "index.html")
+                            .catch(error => messageRenderer.showErrorMessage(error));
+                    });
                 }
             }
             else {

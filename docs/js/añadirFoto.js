@@ -29,7 +29,7 @@ function handleSubmitPhoto(event) {
 
             let cateForm = document.getElementById("categoría-input").value;
 
-            if (categorias.includes(""+cateForm+"")) {
+            if (categorias.includes(""+cateForm+"") || cateForm==="") {
                 let errors = insultosValidator.validatePhotoDescription(formData);
 
                 if (errors.length > 0) {
