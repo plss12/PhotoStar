@@ -29,7 +29,7 @@ function handleSubmitPhoto(event) {
 
             let cateForm = document.getElementById("categoría-input").value;
 
-            if (categorias.includes(""+cateForm+"") || cateForm==="") {
+            if (categorias.includes("" + cateForm + "") || cateForm === "") {
                 let errors = insultosValidator.validatePhotoDescription(formData);
 
                 if (errors.length > 0) {
@@ -40,9 +40,21 @@ function handleSubmitPhoto(event) {
                     }
                 }
                 else {
-                    photosAPI.create(formData)
-                    .then(data => window.location.href = "index.html")
-                    .catch(error => messageRenderer.showErrorMessage(error));
+                    photosAPI.getByUser(sessionManager.getLoggedId())
+                        .then(photos => {
+                            if (photos.length < 50) {
+                                photosAPI.create(formData)
+                                    .then(data => window.location.href = "index.html")
+                                    .catch(error => messageRenderer.showErrorMessage(error));
+                            } else {
+                                messageRenderer.showErrorMessage("Un usuario no puede tener mas de 50 fotos");
+                            }
+                        })
+                        .catch(error => {
+                            photosAPI.create(formData)
+                                .then(data => window.location.href = "index.html")
+                                .catch(error => messageRenderer.showErrorMessage(error));
+                        })
                 }
             }
             else {
