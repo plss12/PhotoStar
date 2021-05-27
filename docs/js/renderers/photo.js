@@ -15,7 +15,7 @@ const photoRenderer = {
         }
         let html = `
         <div class="container"> 
-        <div class="row">
+            <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-11 text-center">
                                 <div class="row">
                                         <div class="col-md-auto">
@@ -24,10 +24,7 @@ const photoRenderer = {
                                                                 class="photo-user"></a>
                                         </div>
                                         <div class="col-md-auto">
-                                                <h5 class="text-center"> ${user.username} </h5>
-                                                <button type="button" class=" btn btn-secondary ">
-                                                        Siguiendo
-                                                </button>
+                                                <h4 class="text-center"> ${user.username} </h4>
                                         </div>
                                 </div>
                                 <h5 class="text-center"> ${photo.title} </h5>
@@ -71,11 +68,16 @@ const photoRenderer = {
                             </div>
                             <div class="col-md-auto">
                                 <h5 class="text-center"> ${user.username} </h5>
-                                <div id="seguirUsuario">
+                                <div id="dejarSeguirUsuario">
                                     <form >
-                                        <button type="submit" class=" btn btn-light "> Seguido </button>
+                                        <button type="submit" class="btn btn-light"> Siguiendo </button>
                                     </form>
                                 </div>
+                                <div id="seguirUsuario">
+                                <form >
+                                    <button type="submit" class="btn btn-secondary"> Seguir </button>
+                                </form>
+                            </div>
                             </div>
                             <div class="col text-right" id="modificarBoton">
                                 <a href="/docs/modificarFoto.html?photoId=${photo.photoId}"><img src="/docs/images/ajustes.png" class="botones"></a>
@@ -107,7 +109,7 @@ const photoRenderer = {
                                     </form>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <p> ${photo.description} foto</p>
+                                    <p> ${photo.description} </p>
                                 </div>
                                 <div class="col-md">
                                     <a ${categoriaId}>
@@ -167,8 +169,7 @@ const photoRenderer = {
                                                     class="photo-user"></a>
                             </div>
                             <div class="col-md-auto">
-                                    <h5 class="text-center"> ${user.username} </h5>
-                                    <button type="button" class=" btn btn-secondary "> Siguiendo </button>
+                                    <h4 class="text-center"> ${user.username} </h4>
                             </div>
                     </div>
                     <h5 class="text-center"> ${photo.title} </h5>

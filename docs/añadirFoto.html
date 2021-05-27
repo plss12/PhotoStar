@@ -19,7 +19,7 @@
 
 <body>
     <div id="page-header"> </div>
-    <form id="añadirFoto">
+    <form id="añadirFoto" autocomplete="off" action="/action_page.php">
         <div class="container text-center">
             <br/>
             <div class="row" id="errors"></div>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        <div class="form-group">
+                        <div class="form-group autocomplete">
                             <label for="input-category">Categoría:</label>
                             <input required type="text" class="form-control" id="categoría-input" name="category"
                                 placeholder="Categoría">

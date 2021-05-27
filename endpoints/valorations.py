@@ -18,6 +18,16 @@ def get_by_photoid():
     pass
 
 ############################
+
+@endpoint(
+    route="/valorations/$photoId/$userId",
+    method="GET",
+    sql="SELECT * FROM Valorations WHERE photoId=$photoId AND userId=$userId"
+)
+def get_by_photoid():
+    pass
+
+############################
   
 @endpoint(
     route="/valorations",

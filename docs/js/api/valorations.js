@@ -21,6 +21,15 @@ const valorationsAPI = {
             }
         );
     },
+    getByPhotoUser: function (photoId, userId) {
+        return new Promise(
+            function (resolve, reject) {
+                axios.get(`${BASE_URL}/valorations/${photoId}/${userId}`, requestOptions)
+                    .then(response => resolve(response.data))
+                    .catch(error => reject(error.response.data.message));
+            }
+        );
+    },
     create: function (formData) {
         return new Promise(function (resolve, reject) {
             axios

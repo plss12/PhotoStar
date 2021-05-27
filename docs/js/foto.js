@@ -9,6 +9,8 @@ import { friendsAPI } from "/js/api/friends.js";
 import { messageRenderer } from "/js/renderers/messages.js"
 import { sessionManager } from "/js/utils/session.js";
 import { galleryRenderer } from "./renderers/gallery.js";
+import { insultosValidator } from "/js/validators/insultosValidators.js";
+
 
 
 let urlParams = new URLSearchParams(window.location.search);
@@ -32,6 +34,7 @@ function main() {
 
                                 hideOptions(photos[0]);
                                 hideFollow(photos[0]);
+                                loadValoration();
 
                                 let comentarios = document.querySelector("#jsComentarios");
                                 commentsAPI.getByPhoto(photoId)
@@ -47,6 +50,9 @@ function main() {
 
                                 let friendForm = document.getElementById("seguirUsuario");
                                 friendForm.onsubmit = handleSubmitFriend;
+
+                                let deleteFriendForm = document.getElementById("dejarSeguirUsuario");
+                                deleteFriendForm.onsubmit = handleSubmitDeleteFriend;
 
                             })
                             .catch(error => {
@@ -54,6 +60,7 @@ function main() {
                                 selector.appendChild(photoDetails);
                                 hideOptions(photos[0]);
                                 hideFollow(photos[0]);
+                                loadValoration();
 
                                 let comentarios = document.querySelector("#jsComentarios");
                                 commentsAPI.getByPhoto(photoId)
@@ -61,6 +68,7 @@ function main() {
                                         let commentsPhotos = galleryRenderer.asPhotoComments(comments);
                                         comentarios.appendChild(commentsPhotos);
                                     })
+
                                 let commentForm = document.getElementById("añadirComentario");
                                 commentForm.onsubmit = handleSubmitComment;
 
@@ -69,6 +77,9 @@ function main() {
 
                                 let friendForm = document.getElementById("seguirUsuario");
                                 friendForm.onsubmit = handleSubmitFriend;
+
+                                let deleteFriendForm = document.getElementById("dejarSeguirUsuario");
+                                deleteFriendForm.onsubmit = handleSubmitDeleteFriend;
                             });
                     })
                     .catch(error => messageRenderer.showErrorMessage(error));
@@ -88,11 +99,29 @@ function handleSubmitValoration(event) {
     formData.append("userId", sessionManager.getLoggedId());
     formData.append("photoId", photoId);
 
+    valorationsAPI.getByPhotoUser(photoId, sessionManager.getLoggedId())
+        .then(valorations=>{
+                valorationsAPI.update(valorations[0].valorationId, formData)
+                .then(data => window.location.href = window.location.search)
+                .catch(error => messageRenderer.showErrorMessage(error));
+        })
+        .catch(error => {
+            valorationsAPI.create(formData)
+            .then(data => window.location.href = window.location.search)
+            .catch(error => messageRenderer.showErrorMessage(error));
+        });
 
-    valorationsAPI.create(formData)
-        .then(data => window.location.href = window.location.search)
+}
+
+function loadValoration(){
+    let valoracion = document.getElementsByName("value");
+
+    valorationsAPI.getByPhotoUser(photoId, sessionManager.getLoggedId())
+            .then(valorations => {
+                console.log(valoracion);
+                 valoracion.value=valorations[0].value;
+        })
         .catch(error => messageRenderer.showErrorMessage(error));
-
 }
 
 function handleSubmitComment(event) {
@@ -103,11 +132,20 @@ function handleSubmitComment(event) {
     formData.append("userId", sessionManager.getLoggedId());
     formData.append("photoId", photoId);
 
+    let errors = insultosValidator.validateComment(formData);
 
-    commentsAPI.create(formData)
-        .then(data => window.location.href = window.location.search)
-        .catch(error => messageRenderer.showErrorMessage(error));
-
+    if (errors.length > 0) {
+        let errorsDiv = document.getElementById("errors");
+        errorsDiv.innerHTML = "";
+        for (let error of errors) {
+            messageRenderer.showErrorMessage(error);
+        }
+    }
+    else {
+        commentsAPI.create(formData)
+            .then(data => window.location.href = window.location.search)
+            .catch(error => messageRenderer.showErrorMessage(error));
+    }
 }
 
 function handleSubmitFriend(event) {
@@ -128,6 +166,19 @@ function handleSubmitFriend(event) {
         .catch(error => messageRenderer.showErrorMessage(error));
 }
 
+function handleSubmitDeleteFriend(event) {
+    event.preventDefault();
+
+
+    photosAPI.getById(photoId)
+        .then(photos => {
+            friendsAPI.delete(sessionManager.getLoggedId(), photos[0].userId)
+                .then(data => window.location.href = window.location.search)
+                .catch(error => messageRenderer.showErrorMessage(error));
+        })
+        .catch(error => messageRenderer.showErrorMessage(error));
+}
+
 function hideOptions(photo) {
     let modificar = document.getElementById("modificarBoton");
     if (sessionManager.getLoggedId() === photo.userId) {
@@ -137,11 +188,29 @@ function hideOptions(photo) {
 }
 
 function hideFollow(photo) {
-    let modificar = document.getElementById("seguirUsuario");
-    if (sessionManager.getLoggedId() !== photo.userId) {
-    } else {
-        modificar.style.display = "none";
+    let seguir = document.getElementById("seguirUsuario");
+    let dejarSeguir = document.getElementById("dejarSeguirUsuario");
+
+    if (sessionManager.getLoggedId() === photo.userId) {
+        seguir.style.display = "none";
+        dejarSeguir.style.display = "none";
     }
+    friendsAPI.getFollows(sessionManager.getLoggedId())
+        .then(friends =>{
+            const ids=[];
+            for(let i=0; i<friends; i++ ){
+                ids.push(friends[i].userId2);
+            }
+            if(ids.includes(photo.userId)){
+                dejarSeguir.style.display = "none";
+            }
+            else{
+                seguir.style.display = "none";
+            }
+        })
+        .catch(error =>{
+            dejarSeguir.style.display = "none";
+        }); 
 }
 
 

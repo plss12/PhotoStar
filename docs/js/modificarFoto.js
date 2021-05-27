@@ -1,8 +1,10 @@
 "use strict";
 import { photosAPI } from "/js/api/photos.js";
+import { categoriesAPI } from "/js/api/categories.js";
 import { photoRenderer } from "/js/renderers/photo.js";
 import { messageRenderer } from "/js/renderers/messages.js";
 import { sessionManager } from "/js/utils/session.js";
+import { insultosValidator } from "/js/validators/insultosValidators.js";
 
 
 let urlParams = new URLSearchParams(window.location.search);
@@ -17,21 +19,21 @@ function main() {
             let photoModify = photoRenderer.asModify(photos[0]);
             selector.appendChild(photoModify);
 
-            if(sessionManager.getLoggedId()===photos[0].userId){
+            if (sessionManager.getLoggedId() === photos[0].userId) {
+                loadCurrentPhoto();
+
                 let registerForm = document.getElementById("modificarFoto");
                 registerForm.onsubmit = handleSubmitPhoto;
-            
+
                 let deleteBtn = document.querySelector("#button-delete");
                 deleteBtn.onclick = handleDelete;
             }
-            else{
+            else {
                 let registerForm = document.getElementById("modificarFoto");
                 registerForm.onsubmit = messageRenderer.showErrorMessage("Esta foto no es tuya");
             }
         })
         .catch(error => messageRenderer.showErrorMessage(error));
-    
-    loadCurrentPhoto();
 }
 
 function handleDelete(event) {
@@ -64,18 +66,43 @@ function loadCurrentPhoto() {
 function handleSubmitPhoto(event) {
     event.preventDefault();
 
-    let form = event.target;
-    let formData = new FormData(form);
+    categoriesAPI.getAll()
+        .then(categories => {
+            const categorias = [];
+            for (var i = 0; i < categories.length; i++) {
+                categorias.push(categories[i].name);
+            }
 
-    formData.append("userId", currentPhoto.userId);
-    formData.append("url", currentPhoto.url);
-    formData.append("date", currentPhoto.date);
+            let form = event.target;
+            let formData = new FormData(form);
 
+            formData.append("userId", currentPhoto.userId);
+            formData.append("url", currentPhoto.url);
+            formData.append("date", currentPhoto.date);
 
-    photosAPI.update(photoId, formData)
-        .then(data => window.location.href = "index.html")
+            let cateForm = document.getElementById("input-category").value;
+
+            if (categorias.includes("" + cateForm + "")) {
+                let errors = insultosValidator.validatePhotoDescription(formData);
+
+                if (errors.length > 0) {
+                    let errorsDiv = document.getElementById("errors");
+                    errorsDiv.innerHTML = "";
+                    for (let error of errors) {
+                        messageRenderer.showErrorMessage(error);
+                    }
+                }
+                else {
+                    photosAPI.update(photoId, formData)
+                    .then(data => window.location.href = "index.html")
+                    .catch(error => messageRenderer.showErrorMessage(error));
+                }
+            }
+            else {
+                messageRenderer.showErrorMessage("La categoria que quieres introducir no existe");
+            }
+        })
         .catch(error => messageRenderer.showErrorMessage(error));
-
 }
 
 document.addEventListener("DOMContentLoaded", main);
