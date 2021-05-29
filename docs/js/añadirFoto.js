@@ -30,13 +30,16 @@ function handleSubmitPhoto(event) {
             let cateForm = document.getElementById("categoría-input").value;
 
             if (categorias.includes("" + cateForm + "") || cateForm === "") {
-                let errors = insultosValidator.validatePhotoDescription(formData);
-
-                if (errors.length > 0) {
+                let error1 = insultosValidator.validatePhotoDescription(formData);
+                let error2=insultosValidator.validatePhotoName(formData);
+                if ((error1+error2).length > 0) {
                     let errorsDiv = document.getElementById("errors");
                     errorsDiv.innerHTML = "";
-                    for (let error of errors) {
-                        messageRenderer.showErrorMessage(error);
+                    if(error1.length>0){
+                        messageRenderer.showErrorMessage(error1);
+                    }
+                    if(error2.length>0){
+                        messageRenderer.showErrorMessage(error2);
                     }
                 }
                 else {

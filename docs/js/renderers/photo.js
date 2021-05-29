@@ -77,7 +77,7 @@ const photoRenderer = {
                                 <form >
                                     <button type="submit" class="btn btn-secondary"> Seguir </button>
                                 </form>
-                            </div>
+                                </div>
                             </div>
                             <div class="col text-right" id="modificarBoton">
                                 <a href="/docs/modificarFoto.html?photoId=${photo.photoId}"><img src="/docs/images/ajustes.png" class="botones"></a>
@@ -89,7 +89,7 @@ const photoRenderer = {
                             <div class="row">
                                 <div class="col-md-auto text-left">
                                     <p class="text-left" id="valoracionMedia">  </p>
-                                    <p class="text-left"> Tu valoración: </p>
+                                    <p class="text-left" id="tuValoracion">  </p>
                                     <form id="añadirValoracion">
                                         <h2>
                                             <p class="clasificacion">

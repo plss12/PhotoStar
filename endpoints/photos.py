@@ -3,7 +3,7 @@ from silence.decorators import endpoint
 @endpoint(
     route="/photos",
     method="GET",
-    sql="SELECT * FROM Photos"
+    sql="SELECT * FROM Photos ORDER BY date DESC"
 )
 def get_all():
     pass
@@ -12,7 +12,7 @@ def get_all():
 @endpoint(
     route="/photos/visibility/$visibility",
     method="GET",
-    sql="SELECT * FROM Photos WHERE visibility=$visibility"
+    sql="SELECT * FROM Photos WHERE visibility=$visibility ORDER BY date DESC"
 )
 def get_all_visibility():
     pass
@@ -31,7 +31,7 @@ def get_by_id():
 @endpoint(
     route="/photos/categories/$category",
     method="GET",
-    sql="SELECT * FROM Photos WHERE category=$category"
+    sql="SELECT * FROM Photos WHERE category=$category ORDER BY date DESC"
 )
 def get_by_category():
     pass
@@ -41,7 +41,7 @@ def get_by_category():
 @endpoint(
     route="/photos/users/$userId",
     method="GET",
-    sql="SELECT * FROM Photos WHERE userId=$userId"
+    sql="SELECT * FROM Photos WHERE userId=$userId ORDER BY date DESC"
 )
 def get_by_user():
     pass

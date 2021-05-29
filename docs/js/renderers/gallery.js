@@ -17,11 +17,11 @@ const galleryRenderer ={
                 categoriesAPI.getByName(photo.category)
                 .then(categories => {
                     let card=photoRenderer.asCard(photo, users[0], categories[0]);
-                    galleryContainer.prepend(card);
+                    galleryContainer.appendChild(card);
                 })
                 .catch(error => {
                     let card=photoRenderer.asCard(photo, users[0], null);
-                    galleryContainer.prepend(card);
+                    galleryContainer.appendChild(card);
                 });
             })
             .catch(error => messageRenderer.showErrorMessage(error));
@@ -43,11 +43,11 @@ const galleryRenderer ={
                     categoriesAPI.getByName(photo.category)
                     .then(categories => {                    
                         let card=photoRenderer.asCard(photo, users[0], categories[0]);
-                        galleryContainer.prepend(card);
+                        galleryContainer.appendChild(card);
                     })
                     .catch(error => {
                         let card=photoRenderer.asCard(photo, users[0], null);
-                        galleryContainer.prepend(card)
+                        galleryContainer.appendChild(card)
                     });
                 })
                 .catch(error => messageRenderer.showErrorMessage(error));
@@ -74,7 +74,7 @@ const galleryRenderer ={
                 usersAPI.getById(photo.userId)
                 .then(users => {
                     let catDet=photoRenderer.asCategoryDetails(photo, users[0]);
-                    galleryContainer.prepend(catDet);
+                    galleryContainer.appendChild(catDet);
                 })
                 .catch(error => messageRenderer.showErrorMessage(error));
             }
@@ -91,12 +91,12 @@ const galleryRenderer ={
         for(let photo of photos){
             if(photo.visibility==="Public" || userId===sessionManager.getLoggedId()){
                 let perCat=photoRenderer.asPerfilDetails(photo);
-                row.prepend(perCat);
+                row.appendChild(perCat);
                 counter+=1;
     
                 if( counter % 3 === 0){
                     row = parseHTML ( '<div class= "row"> </div >') ;
-                    galleryContainer.prepend(row) ;
+                    galleryContainer.appendChild(row) ;
     
                 }
             }

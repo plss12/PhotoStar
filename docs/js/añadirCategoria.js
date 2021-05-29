@@ -20,13 +20,17 @@ function handleSubmitCategory(event) {
     let form = event.target;
     let formData = new FormData(form);
 
-    let errors = insultosValidator.validateCategoryDescription(formData);
+    let error1 = insultosValidator.validateCategoryDescription(formData);
+    let error2 = insultosValidator.validateCategoryName(formData);
 
-    if (errors.length > 0) {
+    if ((error1+error2).length > 0) {
         let errorsDiv = document.getElementById("errors");
         errorsDiv.innerHTML = "";
-        for (let error of errors) {
-            messageRenderer.showErrorMessage(error);
+        if(error1.length>0){
+            messageRenderer.showErrorMessage(error1);
+        }
+        if(error2.length>0){
+            messageRenderer.showErrorMessage(error2);
         }
     }
     else {

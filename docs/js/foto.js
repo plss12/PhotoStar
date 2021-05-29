@@ -35,6 +35,7 @@ function main() {
                                 hideOptions(photos[0]);
                                 hideFollow(photos[0]);
                                 loadValoration();
+                                loadYourValoration();
                                 loadMediaValoration();
 
                                 let comentarios = document.querySelector("#jsComentarios");
@@ -62,6 +63,7 @@ function main() {
                                 hideOptions(photos[0]);
                                 hideFollow(photos[0]);
                                 loadValoration();
+                                loadYourValoration();
                                 loadMediaValoration();
 
                                 let comentarios = document.querySelector("#jsComentarios");
@@ -122,6 +124,15 @@ function loadValoration(){
             .then(valorations => {
                 console.log(valoracion);
                  valoracion.value=valorations[0].value;
+        })
+}
+
+function loadYourValoration(){
+    let valoracion = document.getElementById("tuValoracion");
+
+    valorationsAPI.getByPhotoUser(photoId, sessionManager.getLoggedId())
+            .then(valorations => {
+                 valoracion.textContent=("Tu valoración: "+ valorations[0].value+"★");
         })
 }
 
