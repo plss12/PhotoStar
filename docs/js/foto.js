@@ -138,7 +138,7 @@ function loadYourValoration(){
 
 function loadMediaValoration(){
     let valoracion = document.getElementById("valoracionMedia");
-
+    
     valorationsAPI.getByPhoto(photoId)
             .then(valorations => {
                 let val=0;

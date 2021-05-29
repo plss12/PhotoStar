@@ -21,7 +21,7 @@
     <div id="page-header"> </div>
     <form id="añadirFoto" autocomplete="off" action="/action_page.php">
         <div class="container text-center">
-            <br/>
+            <br />
             <div class="row" id="errors"></div>
             <div class="col-4 m-auto ">
                 <h2> Añadir Nueva Foto: </h2>
@@ -47,8 +47,10 @@
                     <div class="col-md">
                         <div class="form-group autocomplete">
                             <label for="input-category">Categoría:</label>
-                            <input required type="text" class="form-control" id="categoría-input" name="category"
+                            <input required list="categorias" class="form-control" id="categoría-input" name="category"
                                 placeholder="Categoría">
+                            <datalist id="categorias">
+                            </datalist>
                         </div>
                     </div>
                 </div>
@@ -56,7 +58,8 @@
                     <div class="col-md">
                         <div class="form-group">
                             <label for="input-foto"> Foto: </label>
-                            <input required type="text" class="form-control" id="foto-input" name="url" placeholder="Foto">
+                            <input required type="text" class="form-control" id="foto-input" name="url"
+                                placeholder="Foto">
                         </div>
                     </div>
                 </div>

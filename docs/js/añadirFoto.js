@@ -1,5 +1,6 @@
 "use strict";
 import { photosAPI } from "/js/api/photos.js";
+import { parseHTML } from "/js/utils/parseHTML.js" ;
 import { messageRenderer } from "/js/renderers/messages.js";
 import { sessionManager } from "/js/utils/session.js";
 import { categoriesAPI } from "/js/api/categories.js";
@@ -8,8 +9,21 @@ import { insultosValidator } from "/js/validators/insultosValidators.js";
 
 
 function main() {
+    let catForm = document.querySelector("#categorias");
+    categoriesAPI.getAll()
+        .then(categories=> {
+            for (var i = 0; i < categories.length; i++) {
+                let html=parseHTML("<option value="+categories[i].name+">");
+                catForm.appendChild(html);
+            }
+            console.log(catForm)
+        })
+        .catch(error => messageRenderer.showErrorMessage("Aun no existen categorias debes crear una para subir una foto"));
+    
     let fotoForm = document.getElementById("añadirFoto");
     fotoForm.onsubmit = handleSubmitPhoto;
+
+
 }
 
 
@@ -22,7 +36,6 @@ function handleSubmitPhoto(event) {
             for (var i = 0; i < categories.length; i++) {
                 categorias.push(categories[i].name);
             }
-
             let form = event.target;
             let formData = new FormData(form);
             formData.append("userId", sessionManager.getLoggedId());
@@ -64,7 +77,7 @@ function handleSubmitPhoto(event) {
                 messageRenderer.showErrorMessage("La categoria que quieres introducir no existe");
             }
         })
-        .catch(error => messageRenderer.showErrorMessage(error));
+        .catch(error => messageRenderer.showErrorMessage("Aun no existen categorias debes crear una para subir una foto"));
 }
 
 document.addEventListener("DOMContentLoaded", main);
