@@ -11,8 +11,11 @@ function main(){
     categoriesAPI.getById(categoryId)
         .then(categories => {
             let nombre = document.getElementById("nombreCat");
+            let descripcion = document.getElementById("descripcionCat");
             let name= categories[0].name;
+            let description= categories[0].descripcion;
             nombre.textContent=name;
+            descripcion.textContent=description;
             if(sessionManager.isLogged()){
                 let deleteBtn = document.querySelector("#button-delete");
                 deleteBtn.onclick = handleDelete;

@@ -27,7 +27,7 @@ const photoRenderer = {
                                                 <h4 class="text-center"> ${user.username} </h4>
                                         </div>
                                 </div>
-                                <h5 class="text-center"> ${photo.title} </h5>
+                                <h3 class="text-center"> ${photo.title} </h3>
                                 <a href="/docs/foto.html?photoId=${photo.photoId}"><img src="${photo.url}"
                                                 class="img-ini rounded" width=10></a>
                                 <div>
@@ -109,11 +109,11 @@ const photoRenderer = {
                                     </form>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <p> ${photo.description} </p>
+                                    <h5> ${photo.description} </h5>
                                 </div>
                                 <div class="col-md">
                                     <a ${categoriaId}>
-                                        <p class="text-right"> ${categoria} </p>
+                                        <h4 class="text-right"> ${categoria} </h4>
                                     </a>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@ const photoRenderer = {
         </div>
         <div class="row">
             <div class="col-md text-center">
-                ${photo.title}
+                <h5>${photo.title}</h5>
             </div>
         </div>
     </div>

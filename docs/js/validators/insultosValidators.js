@@ -1,9 +1,11 @@
 "use strict";
+
 const insultosValidator = {
     validateComment: function(formData) {
+        const insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros" ];
         let errors = [];
         let texto=formData.get("text").toLowerCase();
-        const insultos=["tonto", "culo"];
+        
         
         for(let i=0; i<insultos.length; i++){
             if (texto.includes(insultos[i])) {
@@ -14,9 +16,9 @@ const insultosValidator = {
 
     },
     validateCategoryDescription: function(formData) {
+        const insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros" ];
         let errors = [];
         let texto=formData.get("descripcion").toLowerCase();
-        const insultos=["tonto", "culo"];
         
         for(let i=0; i<insultos.length; i++){
             if (texto.includes(insultos[i])) {
@@ -26,9 +28,9 @@ const insultosValidator = {
         return errors;
     },
     validateCategoryName: function(formData) {
+        const insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros" ];
         let errors = [];
         let texto=formData.get("name").toLowerCase();
-        const insultos=["tonto", "culo"];
         
         for(let i=0; i<insultos.length; i++){
             if (texto.includes(insultos[i])) {
@@ -38,9 +40,9 @@ const insultosValidator = {
         return errors;
     },
     validatePhotoDescription: function(formData) {
+        const insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros" ];
         let errors = [];
         let texto=formData.get("description").toLowerCase();
-        const insultos=["tonto", "culo"];
         
         for(let i=0; i<insultos.length; i++){
             if (texto.includes(insultos[i])) {
@@ -50,9 +52,9 @@ const insultosValidator = {
         return errors;
     },
     validatePhotoName: function(formData) {
+        const insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros" ];
         let errors = [];
         let texto=formData.get("title").toLowerCase();
-        const insultos=["tonto", "culo"];
         
         for(let i=0; i<insultos.length; i++){
             if (texto.includes(insultos[i])) {
