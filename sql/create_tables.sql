@@ -42,6 +42,7 @@ CREATE TABLE Valorations (
     userId INT NOT NULL,
     photoId INT NOT NULL,
     value INT NOT NULL,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT NoRepeat UNIQUE (userId,photoId),
     CONSTRAINT ValidValue CHECK (value in (1,2,3,4,5))
 );
@@ -50,7 +51,8 @@ CREATE TABLE Comments (
     commentId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     text VARCHAR(512),
     photoId INT NOT NULL,
-    userId INT NOT NULL
+    userId INT NOT NULL,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
 CREATE TABLE Friends (

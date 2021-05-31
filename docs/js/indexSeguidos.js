@@ -16,9 +16,6 @@ function main(){
             .then(users=> {
                 let gallery =galleryRenderer.asCardGalleryFollows(photos, users);
                 content.appendChild(gallery);
-    
-                //let valorationForm = document.getElementById("añadirValoracion");
-                //valorationForm.onsubmit = handleSubmitValoration;
             })
             .catch(error => messageRenderer.showErrorMessage("No sigues a ningun usuario"));
         })
@@ -32,18 +29,5 @@ function main(){
         })
         .catch(error => messageRenderer.showErrorMessage(error));
 }
-
-/*function handleSubmitValoration(event) {
-    event.preventDefault();
-
-  let form = event.target;
-    let formData = new FormData(form);
-    formData.append("userId", sessionManager.getLoggedId());
-    formData.append("photoId", photoId);
-
-    valorationsAPI.create(formData)
-        .then(data => window.location.href = window.location.search)
-        .catch(error => messageRenderer.showErrorMessage(error));
-}*/
 
 document.addEventListener("DOMContentLoaded", main)

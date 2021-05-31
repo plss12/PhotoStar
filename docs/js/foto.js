@@ -15,7 +15,6 @@ import { insultosValidator } from "/js/validators/insultosValidators.js";
 
 let urlParams = new URLSearchParams(window.location.search);
 let photoId = urlParams.get("photoId");
-//let userId2;
 
 function main() {
     let selector = document.querySelector("#jsFotoDetails");
@@ -23,7 +22,6 @@ function main() {
     photosAPI.getById(photoId)
         .then(photos => {
             if (photos[0].visibility === "Public" || photos[0].userId === sessionManager.getLoggedId()) {
-                //userId2.appendChild(photos[0].userId);
                 usersAPI.getById(photos[0].userId)
                     .then(users => {
                         categoriesAPI.getByName(photos[0].category)
@@ -34,7 +32,6 @@ function main() {
 
                                 hideOptions(photos[0]);
                                 hideFollow(photos[0]);
-                                loadValoration();
                                 loadYourValoration();
                                 loadMediaValoration();
 
@@ -62,7 +59,6 @@ function main() {
                                 selector.appendChild(photoDetails);
                                 hideOptions(photos[0]);
                                 hideFollow(photos[0]);
-                                loadValoration();
                                 loadYourValoration();
                                 loadMediaValoration();
 
@@ -117,15 +113,6 @@ function handleSubmitValoration(event) {
 
 }
 
-function loadValoration(){
-    let valoracion = document.getElementsByName("value");
-
-    valorationsAPI.getByPhotoUser(photoId, sessionManager.getLoggedId())
-            .then(valorations => {
-                console.log(valoracion);
-                 valoracion.value=valorations[0].value;
-        })
-}
 
 function loadYourValoration(){
     let valoracion = document.getElementById("tuValoracion");

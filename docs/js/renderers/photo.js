@@ -115,6 +115,7 @@ const photoRenderer = {
                                     <a ${categoriaId}>
                                         <h4 class="text-right"> ${categoria} </h4>
                                     </a>
+                                    <p class="text-right"> ${photo.date} </p>
                                 </div>
                             </div>
                         </div>

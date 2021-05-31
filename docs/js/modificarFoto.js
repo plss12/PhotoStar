@@ -59,6 +59,7 @@ function loadCurrentPhoto() {
     let descripcionInput = document.getElementById("input-description");
     let categoriaInput = document.getElementById("input-category");
     let visibilityInput = document.getElementById("input-visibility");
+    let fotoInput = document.getElementById("input-foto");
 
     photosAPI.getById(photoId)
         .then(photos => {
@@ -67,6 +68,7 @@ function loadCurrentPhoto() {
             descripcionInput.value = currentPhoto.description;
             categoriaInput.value = currentPhoto.category;
             visibilityInput.value = currentPhoto.visibility;
+            fotoInput.value = currentPhoto.url;
 
         })
         .catch(error => messageRenderer.showErrorMessage(error));
