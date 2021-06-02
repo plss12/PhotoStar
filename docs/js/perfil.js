@@ -29,7 +29,7 @@ function main() {
             showUser(users[0]);
             showAvatar(users[0]);
             showNumFotosPerf(users[0]);
-            showPhotos(users[0]);
+            showPhotosAll(users[0]);
             showFollowFollowers(users[0]);
             hideFollow(users[0]);
             loadMediaValoration();
@@ -56,14 +56,6 @@ function showPhotosAll(user) {
         })
 }
 
-function showPhotos(user) {
-    let selector = document.querySelector("#jsPerfil");
-    photosAPI.getByUser(user.userId)
-        .then(photos => {
-            let perfilDetails = galleryRenderer.asPerfilDetails(photos);
-            selector.appendChild(perfilDetails);
-        })
-}
 
 function showUser(user) {
     let username = document.getElementById("userUsuario");
@@ -195,14 +187,15 @@ function hideFollow(user) {
     friendsAPI.getFollows(sessionManager.getLoggedId())
         .then(friends => {
             const ids = [];
-            for (let i = 0; i < friends; i++) {
+            for (let i = 0; i < friends.length; i++) {
                 ids.push(friends[i].userId2);
             }
+            console.log(ids);
             if (ids.includes(user.userId)) {
-                dejarSeguir.style.display = "none";
+                seguir.style.display = "none";
             }
             else {
-                seguir.style.display = "none";
+                dejarSeguir.style.display = "none";
             }
         })
         .catch(error => {
@@ -216,19 +209,23 @@ function loadMediaValoration() {
     photosAPI.getByUser(userId)
         .then(photos => {
             let valMed = 0;
+            let p=0;
             for (let j = 0; j < photos.length; j++) {
-                valorationsAPI.getByPhoto(photos[j].photoId)
+                if(photos[j].visibility==="Public"){
+                    p++;
+                    valorationsAPI.getByPhoto(photos[j].photoId)
                     .then(valorations => {
                         let val = 0;
                         for (let i = 0; i < valorations.length; i++) {
                             val += valorations[i].value;
                         }
                         valMed += (val / valorations.length);
-                        valoracion.textContent = (valMed / photos.length + "★");
+                        valoracion.textContent = (valMed.toFixed(2) / p + "★");
                     })
                     .catch(error =>{
                         valoracion.textContent = 0 + "★";
                     })
+                }
             }
         })
         .catch(error =>{

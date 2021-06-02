@@ -26,15 +26,15 @@ function main() {
                 registerForm.onsubmit = handleSubmitPhoto;
 
                 commentsAPI.getByPhoto(photoId)
-                    .then(comments => {    
+                    .then(comments => {
                         let deleteBtn = document.querySelector("#button-delete");
-                        deleteBtn.onclick=messageRenderer.showErrorMessage("Esta foto no se puede eliminar ya que tiene comentarios");                    
+                        deleteBtn.onclick = messageRenderer.showErrorMessage("Esta foto no se puede eliminar ya que tiene comentarios");
                     })
                     .catch(error => {
                         let deleteBtn = document.querySelector("#button-delete");
                         deleteBtn.onclick = handleDelete;
                     });
-          
+
             }
             else {
                 let registerForm = document.getElementById("modificarFoto");
@@ -93,33 +93,37 @@ function handleSubmitPhoto(event) {
 
             let cateForm = document.getElementById("input-category").value;
 
-            if (categorias.includes("" + cateForm + "") || cateForm==="") {
-                let errors = insultosValidator.validatePhotoDescription(formData);
+            if (categorias.includes("" + cateForm + "") || cateForm === "") {
+                let error1 = insultosValidator.validatePhotoDescription(formData);
+                let error2 = insultosValidator.validatePhotoName(formData);
 
-                if (errors.length > 0) {
+                if ((error1 + error2).length > 0) {
                     let errorsDiv = document.getElementById("errors");
                     errorsDiv.innerHTML = "";
-                    for (let error of errors) {
-                        messageRenderer.showErrorMessage(error);
+                    if (error1.length > 0) {
+                        messageRenderer.showErrorMessage(error1);
+                    }
+                    if (error2.length > 0) {
+                        messageRenderer.showErrorMessage(error2);
                     }
                 }
                 else {
                     commentsAPI.getByPhoto(photoId)
-                    .then(comments => {   
-                        if(formData.get("visibility")==="Public"){
+                        .then(comments => {
+                            if (formData.get("visibility") === "Public") {
+                                photosAPI.update(photoId, formData)
+                                    .then(data => window.location.href = "index.html")
+                                    .catch(error => messageRenderer.showErrorMessage(error));
+                            }
+                            else {
+                                messageRenderer.showErrorMessage("No se puede poner privada una foto con comentarios");
+                            }
+                        })
+                        .catch(error => {
                             photosAPI.update(photoId, formData)
                                 .then(data => window.location.href = "index.html")
                                 .catch(error => messageRenderer.showErrorMessage(error));
-                        }
-                        else{
-                            messageRenderer.showErrorMessage("No se puede poner privada una foto con comentarios");
-                        }
-                    })
-                    .catch(error => {
-                        photosAPI.update(photoId, formData)
-                            .then(data => window.location.href = "index.html")
-                            .catch(error => messageRenderer.showErrorMessage(error));
-                    });
+                        });
                 }
             }
             else {

@@ -47,6 +47,16 @@ def get_by_user():
     pass
 
 ############################
+
+@endpoint(
+    route="/photos/week",
+    method="GET",
+    sql="SELECT * FROM Photos WHERE (date BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW()) AND visibility='Public' ORDER BY date DESC"
+)
+def get_this_week():
+    pass
+
+############################
   
 @endpoint(
     route="/photos",

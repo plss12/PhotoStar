@@ -132,7 +132,8 @@ function loadMediaValoration(){
                 for(let i=0; i<valorations.length; i++){
                     val+=valorations[i].value;
                 }
-                valoracion.textContent=("La valoración media es de "+(val/valorations.length)+"★");
+                let res=(val/valorations.length);
+                valoracion.textContent=("La valoración media es de "+res.toFixed(2)+"★");
         })
         .catch(error =>{
             valoracion.textContent=("Aun no tiene valoraciones");

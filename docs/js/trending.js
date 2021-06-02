@@ -1,7 +1,7 @@
 "use strict"
 import { galleryRenderer } from "/js/renderers/gallery.js";
-import { messageRenderer } from "/js/renderers/messages.js";
 import { photosAPI } from "/js/api/photos.js";
+import { commentsAPI } from "/js/api/comments.js";
 import { categoriesAPI } from "/js/api/categories.js";
 import { friendsAPI } from "/js/api/friends.js";
 import { valorationsAPI } from "/js/api/valorations.js";
@@ -17,30 +17,54 @@ function main() {
     moreCommentsPhotos();
 }
 
+function orderObjectTop5(trend) {
+    var sortable = [];
+    for (var top in trend) {
+        sortable.push([top, trend[top]]);
+    }
+
+    sortable.sort(function (a, b) {
+        return (b[1] - a[1])
+    })
+    return (sortable.slice(0, 5));
+}
+
 
 function moreFollowers() {
+    let content4 = document.querySelector("#jsTrendFollow");
 
     usersAPI.getAll()
         .then(users => {
-            let num = new Map();
+            var num = {};
             for (let i = 0; i < users.length; i++) {
                 friendsAPI.getFollowers(users[i].userId)
                     .then(friends => {
                         let foll = friends.length;
-                        num.set(users[i], foll);
+                        num[users[i].userId] = foll;
+                        if (i === users.length - 1) {
+                            let gallery4 = galleryRenderer.asTrendSeguidores(orderObjectTop5(num));
+                            content4.appendChild(gallery4);
+                        }
+                    })
+                    .catch(error => {
+                        if (i === users.length - 1) {
+                            let gallery4 = galleryRenderer.asTrendSeguidores(orderObjectTop5(num));
+                            content4.appendChild(gallery4);
+                        }
                     });
             }
-            console.log(num);
         })
 }
 
-
 function moreMediaValoration() {
+    let content5 = document.querySelector("#jsTrendValMed");
+    var valoracion = {};
+    const ids = [];
 
     usersAPI.getAll()
         .then(users => {
-            const valoracion = new Map();
             for (let i = 0; i < users.length; i++) {
+                ids.push(users[i].userId);
                 photosAPI.getByUser(users[i].userId)
                     .then(photos => {
                         let valMed = 0;
@@ -52,56 +76,127 @@ function moreMediaValoration() {
                                         val += valorations[i].value;
                                     }
                                     valMed += (val / valorations.length);
-                                    valoracion.set(users[i], (valMed / photos.length));
+                                    let res = (valMed / photos.length);
+                                    valoracion[users[i].userId] = res.toFixed(2);
+                                    if (i === users.length - 1 && j === photos.length - 1) {
+                                        let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
+                                        content5.appendChild(gallery5);
+                                    }
+                                })
+                                .catch(error => {
+                                    if (i === users.length - 1 && j === photos.length - 1) {
+                                        let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
+                                        content5.appendChild(gallery5);
+                                    }
+                                });
+                        }
+                    })
+                    .catch(error => {
+                        ids.pop();
+                        let valMed = 0;
+                        for (let j = 0; j < ids.length; j++) {
+                            valorationsAPI.getByPhoto(ids[j])
+                                .then(valorations => {
+                                    let val = 0;
+                                    for (let i = 0; i < valorations.length; i++) {
+                                        val += valorations[i].value;
+                                    }
+                                    valMed += (val / valorations.length);
+                                    let res = (valMed / ids.length);
+                                    if(ids.includes(users[i].userId)){
+                                        valoracion[users[i].userId] = res.toFixed(2);
+                                    }
+                                    if (i === users.length - 1 && j === ids.length - 1) {
+                                        let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
+                                        content5.appendChild(gallery5);
+                                    }
+                                })
+                                .catch(error => {
+                                    if (i === users.length - 1 && j === ids.length - 1) {
+                                        let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
+                                        content5.appendChild(gallery5);
+                                    }
                                 });
                         }
                     });
             }
-            console.log(valoracion);
         })
 }
 
 function morePhotosCategory() {
+    let content3 = document.querySelector("#jsTrendCat");
+
     categoriesAPI.getAll()
         .then(categories => {
-            let num = new Map();
+            var num = {};
             for (let i = 0; i < categories.length; i++) {
                 photosAPI.getByCategory(categories[i].name)
                     .then(photos => {
-                        num.set(categories[i], photos.length);
+                        num[categories[i].categoryId] = photos.length;
+                        if (i === categories.length - 1) {
+                            let gallery3 = galleryRenderer.asTrendCategorias(orderObjectTop5(num));
+                            content3.appendChild(gallery3);
+                        }
+                    })
+                    .catch(error => {
+                        if (i === categories.length - 1) {
+                            let gallery3 = galleryRenderer.asTrendCategorias(orderObjectTop5(num));
+                            content3.appendChild(gallery3);
+                        }
                     });
             }
-            console.log(num);
         })
 }
 
 function moreValoracionPhotos() {
+    let content1 = document.querySelector("#jsTrendVal");
 
-    photosAPI.getAll()
+    photosAPI.getThisWeek()
         .then(photos => {
-            let num = new Map();
+            var num = {};
             for (let i = 0; i < photos.length; i++) {
-                valorationsAPI.getByPhoto(photoId)
+                valorationsAPI.getByPhoto(photos[i].photoId)
                     .then(valorations => {
                         let val = 0;
                         for (let i = 0; i < valorations.length; i++) {
                             val += valorations[i].value;
                         }
-                        num.set(photos[i], val);
+                        num[photos[i].photoId] = (val / valorations.length);
+                        if (i === photos.length - 1) {
+                            let gallery1 = galleryRenderer.asTrendValoraciones(orderObjectTop5(num));
+                            content1.appendChild(gallery1);
+                        }
+                    })
+                    .catch(error => {
+                        if (i === photos.length - 1) {
+                            let gallery1 = galleryRenderer.asTrendValoraciones(orderObjectTop5(num));
+                            content1.appendChild(gallery1);
+                        }
                     })
             }
         })
 }
 
 function moreCommentsPhotos() {
+    let content2 = document.querySelector("#jsTrendComen");
 
-    photosAPI.getAll()
+    photosAPI.getThisWeek()
         .then(photos => {
-            let num = new Map();
+            var num = {};
             for (let i = 0; i < photos.length; i++) {
-                commentsAPI.getByPhoto(photoId)
+                commentsAPI.getByPhoto(photos[i].photoId)
                     .then(comments => {
-                        num.set(photos[i], comments.length);
+                        num[photos[i].photoId] = comments.length;
+                        if (i === photos.length - 1) {
+                            let gallery2 = galleryRenderer.asTrendComentarios(orderObjectTop5(num));
+                            content2.appendChild(gallery2);
+                        }
+                    })
+                    .catch(error => {
+                        if (i === photos.length - 1) {
+                            let gallery2 = galleryRenderer.asTrendComentarios(orderObjectTop5(num));
+                            content2.appendChild(gallery2);
+                        }
                     })
             }
         })

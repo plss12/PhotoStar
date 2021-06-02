@@ -3,7 +3,7 @@ from silence.decorators import endpoint
 @endpoint(
     route="/categories",
     method="GET",
-    sql="SELECT * FROM Categories"
+    sql="SELECT * FROM Categories ORDER BY name"
 )
 def get_all():
     pass

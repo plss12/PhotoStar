@@ -200,8 +200,8 @@ const photoRenderer = {
         </div>
     </div>
     `;
-        let categoria = parseHTML(html);
-        return categoria;
+        let foto = parseHTML(html);
+        return foto;
     },
     asComment: function (comment, user) {
         let html = `<div class=container>
@@ -219,6 +219,52 @@ const photoRenderer = {
         `;
         let photoModify = parseHTML(html);
         return photoModify;
+    },
+    asTrendValoracionComentarios: function (photo, textContent) {
+        let html = `<div>
+        <div class="row">
+        <div class="col m-auto">
+            <h6 class="text-center"> ${photo.title} </h6>
+            <a href="/docs/foto.html?photoId=${photo.photoId}"><img src="${photo.url}" class="img-top rounded"></a>
+            <h6 class="text-center"> ${textContent} </h6>
+        </div>
+        </div>
+        <br />
+        </div>
+        `;
+        let trend = parseHTML(html);
+        return trend;
+    },
+    asTrendCategoria: function (category, textContent) {
+        let html = `<div>
+        <div class="row">
+        <div class="col m-auto">
+            <a href="/docs/categoria.html?categoryId=${category.categoryId}"><img src="${category.foto}" class="img-top rounded"></a>
+            <h6 class="text-center"> ${category.name} </h6>
+            <h6 class="text-center"> ${textContent} </h6>
+        </div>
+    </div>
+    <br/>
+    </div>
+        `;
+        let trend = parseHTML(html);
+        return trend;
+    },
+    asTrendUsers: function (user, textContent) {
+        
+        let html = `<div>
+        <div class="row">
+        <div class="col m-auto">
+            <a href="/docs/perfil.html?userId=${user.userId}"><img src="${user.avatarUrl}" class="img-top rounded"></a>
+            <h6 class="text-center"> ${user.username} </h6>
+            <h6 class="text-center"> ${textContent} </h6>
+        </div>
+    </div>
+    <br/>
+    </div>
+        `;
+        let trend = parseHTML(html);
+        return trend;
     }
 };
 
