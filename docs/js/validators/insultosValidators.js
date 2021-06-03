@@ -1,9 +1,9 @@
 "use strict";
 
 const insultosValidator = {
-    insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros" ],
     validateComment: function(formData) {
-        
+        let insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros"];
+
         let errors = [];
         let texto=formData.get("text").toLowerCase();
         
@@ -17,6 +17,8 @@ const insultosValidator = {
 
     },
     validateCategoryDescription: function(formData) {
+        let insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros"];
+
         let errors = [];
         let texto=formData.get("descripcion").toLowerCase();
         
@@ -28,6 +30,8 @@ const insultosValidator = {
         return errors;
     },
     validateCategoryName: function(formData) {
+        let insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros"];
+
         let errors = [];
         let texto=formData.get("name").toLowerCase();
         
@@ -39,6 +43,8 @@ const insultosValidator = {
         return errors;
     },
     validatePhotoDescription: function(formData) {
+        let insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros"];
+
         let errors = [];
         let texto=formData.get("description").toLowerCase();
         
@@ -50,6 +56,8 @@ const insultosValidator = {
         return errors;
     },
     validatePhotoName: function(formData) {
+        let insultos=["tonto", "tonta", "culo", "gilipolla", "subnormal", "retrasado", "puta", "guarr", "asqueros"];
+
         let errors = [];
         let texto=formData.get("title").toLowerCase();
         

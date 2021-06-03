@@ -59,64 +59,47 @@ function moreFollowers() {
 function moreMediaValoration() {
     let content5 = document.querySelector("#jsTrendValMed");
     var valoracion = {};
-    const ids = [];
 
     usersAPI.getAll()
         .then(users => {
             for (let i = 0; i < users.length; i++) {
-                ids.push(users[i].userId);
                 photosAPI.getByUser(users[i].userId)
                     .then(photos => {
                         let valMed = 0;
+                        let p = 0;
                         for (let j = 0; j < photos.length; j++) {
-                            valorationsAPI.getByPhoto(photos[j].photoId)
-                                .then(valorations => {
-                                    let val = 0;
-                                    for (let i = 0; i < valorations.length; i++) {
-                                        val += valorations[i].value;
-                                    }
-                                    valMed += (val / valorations.length);
-                                    let res = (valMed / photos.length);
-                                    valoracion[users[i].userId] = res.toFixed(2);
-                                    if (i === users.length - 1 && j === photos.length - 1) {
-                                        let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
-                                        content5.appendChild(gallery5);
-                                    }
-                                })
-                                .catch(error => {
-                                    if (i === users.length - 1 && j === photos.length - 1) {
-                                        let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
-                                        content5.appendChild(gallery5);
-                                    }
-                                });
+                            if (photos[j].visibility === "Public") {
+                                p++;
+                                valorationsAPI.getByPhoto(photos[j].photoId)
+                                    .then(valorations => {
+                                        let val = 0;
+                                        for (let i = 0; i < valorations.length; i++) {
+                                            val += valorations[i].value;
+                                        }
+                                        valMed += (val / valorations.length);
+                                        let res = (valMed / p);
+                                        valoracion[users[i].userId] = res.toFixed(2);
+
+                                        if (i === users.length - 1 && j === photos.length - 1) {
+                                            let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
+                                            content5.appendChild(gallery5);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        if (i === users.length - 1 && j === photos.length - 1) {
+                                            let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
+                                            content5.appendChild(gallery5);
+                                        }
+                                    });
+                            }
                         }
                     })
                     .catch(error => {
-                        ids.pop();
-                        let valMed = 0;
-                        for (let j = 0; j < ids.length; j++) {
-                            valorationsAPI.getByPhoto(ids[j])
-                                .then(valorations => {
-                                    let val = 0;
-                                    for (let i = 0; i < valorations.length; i++) {
-                                        val += valorations[i].value;
-                                    }
-                                    valMed += (val / valorations.length);
-                                    let res = (valMed / ids.length);
-                                    if(ids.includes(users[i].userId)){
-                                        valoracion[users[i].userId] = res.toFixed(2);
-                                    }
-                                    if (i === users.length - 1 && j === ids.length - 1) {
-                                        let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
-                                        content5.appendChild(gallery5);
-                                    }
-                                })
-                                .catch(error => {
-                                    if (i === users.length - 1 && j === ids.length - 1) {
-                                        let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
-                                        content5.appendChild(gallery5);
-                                    }
-                                });
+                        if (i === users.length - 1 ) {
+                            setTimeout(function(){
+                                let gallery5 = galleryRenderer.asTrendMediaValoracion(orderObjectTop5(valoracion));
+                                content5.appendChild(gallery5);
+                            },3000)
                         }
                     });
             }

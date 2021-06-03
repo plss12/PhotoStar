@@ -22,7 +22,7 @@ function main() {
         showPhotosAll(user);
         showFollowFollowers(user);
         hideFollow(user);
-        loadMediaValoration();
+        loadMediaValoration(user);
     }
     else {
         usersAPI.getById(userId).then(users => {
@@ -32,7 +32,7 @@ function main() {
             showPhotosAll(users[0]);
             showFollowFollowers(users[0]);
             hideFollow(users[0]);
-            loadMediaValoration();
+            loadMediaValoration(users[0]);
 
             let friendForm = document.getElementById("seguirUsuario");
             friendForm.onsubmit = handleSubmitFriend;
@@ -190,7 +190,6 @@ function hideFollow(user) {
             for (let i = 0; i < friends.length; i++) {
                 ids.push(friends[i].userId2);
             }
-            console.log(ids);
             if (ids.includes(user.userId)) {
                 seguir.style.display = "none";
             }
@@ -203,10 +202,10 @@ function hideFollow(user) {
         });
 }
 
-function loadMediaValoration() {
+function loadMediaValoration(user) {
     let valoracion = document.getElementById("valoracionUsuario");
 
-    photosAPI.getByUser(userId)
+    photosAPI.getByUser(user.userId)
         .then(photos => {
             let valMed = 0;
             let p=0;
@@ -220,7 +219,7 @@ function loadMediaValoration() {
                             val += valorations[i].value;
                         }
                         valMed += (val / valorations.length);
-                        valoracion.textContent = (valMed.toFixed(2) / p + "★");
+                        valoracion.textContent = ((valMed/p).toFixed(2) + "★");
                     })
                     .catch(error =>{
                         valoracion.textContent = 0 + "★";

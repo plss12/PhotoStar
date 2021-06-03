@@ -29,8 +29,8 @@ function main() {
 
 function handleSubmitPhoto(event) {
     event.preventDefault();
-
-    categoriesAPI.getAll()
+    if(sessionManager.isLogged()){
+        categoriesAPI.getAll()
         .then(categories => {
             const categorias = [];
             for (var i = 0; i < categories.length; i++) {
@@ -78,6 +78,11 @@ function handleSubmitPhoto(event) {
             }
         })
         .catch(error => messageRenderer.showErrorMessage("Aun no existen categorias debes crear una para subir una foto"));
+    }
+    else{
+        messageRenderer.showErrorMessage("No estas registrado")
+    }
+    
 }
 
 document.addEventListener("DOMContentLoaded", main);
