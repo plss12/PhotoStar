@@ -4,7 +4,6 @@ import { messageRenderer } from "/js/renderers/messages.js" ;
 import { photosAPI } from "/js/api/photos.js";
 import { categoriesAPI } from "/js/api/categories.js";
 import { friendsAPI } from "/js/api/friends.js";
-import { valorationsAPI } from "/js/api/valorations.js";
 import { sessionManager } from "/js/utils/session.js";
 
 
